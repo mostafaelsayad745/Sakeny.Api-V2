@@ -1,0 +1,1350 @@
+{
+	"info": {
+		"_postman_id": "36c36b6b-4c7f-4025-ac7a-c02790b70a74",
+		"name": "sakeny",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "25925575",
+		"_collection_link": "https://interstellar-crater-69736.postman.co/workspace/sakeny~722315bc-a937-4eeb-b4dc-f157e3e48ad1/collection/25925575-36c36b6b-4c7f-4025-ac7a-c02790b70a74?action=share&source=collection_link&creator=25925575"
+	},
+	"item": [
+		{
+			"name": "sakeny.api",
+			"item": [
+				{
+					"name": "User",
+					"item": [
+						{
+							"name": "GET Users",
+							"request": {
+								"auth": {
+									"type": "bearer",
+									"bearer": [
+										{
+											"key": "token",
+											"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiIyIiwidXNlcl9uYW1lIjoiYWJkZWxyYWhtYW5fbWFuc291ciIsInVzZXJfZW1haWwiOiJhYmRlbHJhaG1hbm1hbnNvdXJAZ21haWwuY29tIiwibmJmIjoxNzEwMzI2ODMzLCJleHAiOjE3MTAzMzA0MzMsImlzcyI6Imh0dHBzOi8vbG9jYWxob3N0OjcwODAiLCJhdWQiOiJTYWtlbnkuYXBpIn0.K_GuxsZcIpSjDMgmQ4Quosm8PWB_YJARTwS6JN0x_hM",
+											"type": "string"
+										}
+									]
+								},
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "https://localhost:{{portNumber}}/api/users",
+									"protocol": "https",
+									"host": [
+										"localhost"
+									],
+									"port": "{{portNumber}}",
+									"path": [
+										"api",
+										"users"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "GET User",
+							"request": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "https://localhost:{{portNumber}}/api/users/3",
+									"protocol": "https",
+									"host": [
+										"localhost"
+									],
+									"port": "{{portNumber}}",
+									"path": [
+										"api",
+										"users",
+										"3"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "POST User",
+							"request": {
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\r\n    \"userName\": \"abdelrahman_mansour\",\r\n    \"userPassword\": \"123456789\",\r\n    \"userFullName\": \"عبدالرحمن منصور حامد\",\r\n    \"userEmail\": \"abdelrahmanmansour@gmail.com\",\r\n    \"userNatId\": \"30205301211458\",\r\n    \"userGender\": \"male\",\r\n    \"userAge\": 25,\r\n    \"userInfo\": \"Flutter Dev\",\r\n    \"userAddress\": \"المنصورة - طلخا -السوق التحتاني\",\r\n    \"userAccountType\": \"مستأجر\"\r\n    \r\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "https://localhost:{{portNumber}}/api/users",
+									"protocol": "https",
+									"host": [
+										"localhost"
+									],
+									"port": "{{portNumber}}",
+									"path": [
+										"api",
+										"users"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "POST User (missing all properties)",
+							"request": {
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\r\n    \r\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "https://localhost:{{portNumber}}/api/users",
+									"protocol": "https",
+									"host": [
+										"localhost"
+									],
+									"port": "{{portNumber}}",
+									"path": [
+										"api",
+										"users"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "POST User (missing some properties)",
+							"request": {
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\r\n    \"userName\": \"amir.ahmed\",\r\n    \"userPassword\": \"user3_password\",\r\n    \"userFullName\": \"amir ahmed mohamed\",\r\n    \"userEmail\": \"amir@example.com\",\r\n    \"userNatId\": \"98765432109877\"\r\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "https://localhost:{{portNumber}}/api/users",
+									"protocol": "https",
+									"host": [
+										"localhost"
+									],
+									"port": "{{portNumber}}",
+									"path": [
+										"api",
+										"users"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "PUT User",
+							"request": {
+								"method": "PUT",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\r\n    \"userId\": 2,\r\n    \"userName\": \"abdelrahman_mansour\",\r\n    \"userPassword\": \"123456789\",\r\n    \"userFullName\": \"عبدالرحمن منصور حامد\",\r\n    \"userEmail\": \"abdelrahmanmansour@gmail.com\",\r\n    \"userNatId\": \"30205301211458\",\r\n    \"userGender\": \"male\",\r\n    \"userAge\": 20,\r\n    \"userInfo\": \"Flutter Dev\",\r\n    \"userAddress\": \"المنصورة - طلخا -السوق التحتاني\",\r\n    \"userAccountType\": \"مستأجر\",\r\n    \"postFeedbackTbls\": []\r\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "https://localhost:{{portNumber}}/api/users/2",
+									"protocol": "https",
+									"host": [
+										"localhost"
+									],
+									"port": "{{portNumber}}",
+									"path": [
+										"api",
+										"users",
+										"2"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "PUT User (changing one property)",
+							"request": {
+								"method": "PUT",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\r\n    \r\n    \"userInfo\": \"Flutter Dev\"\r\n    \r\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "https://localhost:{{portNumber}}/api/users/2",
+									"protocol": "https",
+									"host": [
+										"localhost"
+									],
+									"port": "{{portNumber}}",
+									"path": [
+										"api",
+										"users",
+										"2"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "PATCH User",
+							"request": {
+								"method": "PATCH",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "[\r\n    {\r\n        \"op\":\"replace\",\r\n        \"path\":\"/userFullName\",\r\n        \"value\":\"Kareem mohamed mostafa\"\r\n    }\r\n]",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "https://localhost:{{portNumber}}/api/users/2",
+									"protocol": "https",
+									"host": [
+										"localhost"
+									],
+									"port": "{{portNumber}}",
+									"path": [
+										"api",
+										"users",
+										"2"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "PATCH User (update multiple)",
+							"request": {
+								"method": "PATCH",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "[\r\n    {\r\n        \"op\":\"replace\",\r\n        \"path\":\"/userFullName\",\r\n        \"value\":\"Khaled mohamed mostafa\"\r\n    },\r\n    {\r\n        \"op\":\"replace\",\r\n        \"path\":\"/userEmail\",\r\n        \"value\":\"khaled.mohamed.mostafa@gmail.com\"\r\n    }\r\n]",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "https://localhost:{{portNumber}}/api/users/2",
+									"protocol": "https",
+									"host": [
+										"localhost"
+									],
+									"port": "{{portNumber}}",
+									"path": [
+										"api",
+										"users",
+										"2"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "DELETE User",
+							"request": {
+								"method": "DELETE",
+								"header": [],
+								"url": {
+									"raw": "https://localhost:{{portNumber}}/api/users/4",
+									"protocol": "https",
+									"host": [
+										"localhost"
+									],
+									"port": "{{portNumber}}",
+									"path": [
+										"api",
+										"users",
+										"4"
+									]
+								}
+							},
+							"response": []
+						}
+					]
+				},
+				{
+					"name": "Post",
+					"item": [
+						{
+							"name": "GET Posts (For specific User which its Statue is true)",
+							"request": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "https://localhost:{{portNumber}}/api/users/2/posts",
+									"protocol": "https",
+									"host": [
+										"localhost"
+									],
+									"port": "{{portNumber}}",
+									"path": [
+										"api",
+										"users",
+										"2",
+										"posts"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "GET Post (specific post for specific user)",
+							"protocolProfileBehavior": {
+								"disableBodyPruning": true
+							},
+							"request": {
+								"method": "GET",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "https://localhost:{{portNumber}}/api/users/2/posts/2",
+									"protocol": "https",
+									"host": [
+										"localhost"
+									],
+									"port": "{{portNumber}}",
+									"path": [
+										"api",
+										"users",
+										"2",
+										"posts",
+										"2"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "POST Post (For specific user)",
+							"request": {
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\r\n    \"PostDate\": \"2024-02-08T12:30:00Z\",\r\n    \"PostTime\": \"05:30:00\",\r\n    \"PostCategory\": \"Real Estate\",\r\n    \"PostTitle\": \"wow House for Sale\",\r\n    \"PostBody\": \"Lorem ipsum dolor sit amet, consectetur adipiscing elit.\",\r\n    \"PostArea\": 200.5,\r\n    \"PostKitchens\": 2,\r\n    \"PostBedrooms\": 3,\r\n    \"PostBathrooms\": 2,\r\n    \"PostLookSea\": true,\r\n    \"PostPetsAllow\": false,\r\n    \"PostCurrency\": \"USD\",\r\n    \"PostPriceAi\": 250000.00,\r\n    \"PostPriceDisplay\": 265000.00,\r\n    \"PostPriceType\": \"Negotiable\",\r\n    \"PostAddress\": \"123 Main Street\",\r\n    \"PostCity\": \"france City\",\r\n    \"PostState\": \"cairo State\",\r\n    \"PostFloor\": 2,\r\n    \"PostLatitude\": \"40.7128\",\r\n    \"PostLongitude\": \"-74.0060\",\r\n    \"PostStatue\": false,\r\n    \"PostPicTbls\": [\r\n      \r\n      \r\n    ]\r\n  }",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "https://localhost:{{portNumber}}/api/users/2/posts",
+									"protocol": "https",
+									"host": [
+										"localhost"
+									],
+									"port": "{{portNumber}}",
+									"path": [
+										"api",
+										"users",
+										"2",
+										"posts"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "PUT Post (for specific User)",
+							"request": {
+								"method": "PUT",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": " {\r\n        \"postDate\": \"2024-02-08T00:00:00\",\r\n        \"postTime\": \"05:30:00\",\r\n        \"postCategory\": \"Real Estate\",\r\n        \"postTitle\": \"Beautiful House for Sale\",\r\n        \"postBody\": \"Lorem ipsum dolor sit amet, consectetur adipiscing elit.\",\r\n        \"postArea\": 200.50,\r\n        \"postKitchens\": 2,\r\n        \"postBedrooms\": 3,\r\n        \"postBathrooms\": 2,\r\n        \"postLookSea\": true,\r\n        \"postPetsAllow\": false,\r\n        \"postCurrency\": \"USD\",\r\n        \"postPriceAi\": 250000.00,\r\n        \"postPriceDisplay\": 265000.00,\r\n        \"postPriceType\": \"Negotiable\",\r\n        \"postAddress\": \"123 Main Street\",\r\n        \"postCity\": \"Giza City\",\r\n        \"postState\": \"Sample State\",\r\n        \"postFloor\": 2,\r\n        \"postLatitude\": \"40.7128\",\r\n        \"postLongitude\": \"-74.0060\",\r\n        \"postStatue\": true,\r\n        \"postPicTbls\": []\r\n    }",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "https://localhost:{{portNumber}}/api/users/2/posts/2",
+									"protocol": "https",
+									"host": [
+										"localhost"
+									],
+									"port": "{{portNumber}}",
+									"path": [
+										"api",
+										"users",
+										"2",
+										"posts",
+										"2"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "PATCH Post ( Update one property (PostStatue) in post )",
+							"request": {
+								"method": "PATCH",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "[\r\n    {\r\n        \"op\":\"replace\",\r\n        \"path\":\"/PostStatue\",\r\n        \"value\":true\r\n    }\r\n]",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "https://localhost:{{portNumber}}/api/users/2/posts/10/statues",
+									"protocol": "https",
+									"host": [
+										"localhost"
+									],
+									"port": "{{portNumber}}",
+									"path": [
+										"api",
+										"users",
+										"2",
+										"posts",
+										"10",
+										"statues"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "PATCH Post ( Update all properties except (Statues property ) in post )",
+							"request": {
+								"method": "PATCH",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "[\r\n    {\r\n        \"op\":\"replace\",\r\n        \"path\":\"/PostLookSea\",\r\n        \"value\":true\r\n    },\r\n    {\r\n        \"op\":\"replace\",\r\n        \"path\":\"/postCity\",\r\n        \"value\":\"Roma\"\r\n    }\r\n\r\n]",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "https://localhost:{{portNumber}}/api/users/2/posts/2",
+									"protocol": "https",
+									"host": [
+										"localhost"
+									],
+									"port": "{{portNumber}}",
+									"path": [
+										"api",
+										"users",
+										"2",
+										"posts",
+										"2"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "DELETE Post",
+							"request": {
+								"method": "DELETE",
+								"header": [],
+								"url": {
+									"raw": "https://localhost:{{portNumber}}/api/users/2/posts/2",
+									"protocol": "https",
+									"host": [
+										"localhost"
+									],
+									"port": "{{portNumber}}",
+									"path": [
+										"api",
+										"users",
+										"2",
+										"posts",
+										"2"
+									]
+								}
+							},
+							"response": []
+						}
+					]
+				},
+				{
+					"name": "Post Feedback",
+					"item": [
+						{
+							"name": "GET PostFeedbacks",
+							"request": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "https://localhost:{{portNumber}}/api/users/2/posts/2/postfeedbacks",
+									"protocol": "https",
+									"host": [
+										"localhost"
+									],
+									"port": "{{portNumber}}",
+									"path": [
+										"api",
+										"users",
+										"2",
+										"posts",
+										"2",
+										"postfeedbacks"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "GET PostFeedback",
+							"request": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "https://localhost:7080/api/users/2/posts/1/postfeedbacks/1",
+									"protocol": "https",
+									"host": [
+										"localhost"
+									],
+									"port": "7080",
+									"path": [
+										"api",
+										"users",
+										"2",
+										"posts",
+										"1",
+										"postfeedbacks",
+										"1"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "POST Postfeedback ",
+							"request": {
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\r\n  \"PostFeedDate\": \"2024-01-24T12:34:56.789Z\",\r\n  \"PostFeedTime\": \"02:30:00\",\r\n  \"PostFeedText\": \"up\"\r\n  \r\n}\r\n",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "https://localhost:{{portNumber}}/api/users/2/posts/1/postfeedbacks",
+									"protocol": "https",
+									"host": [
+										"localhost"
+									],
+									"port": "{{portNumber}}",
+									"path": [
+										"api",
+										"users",
+										"2",
+										"posts",
+										"1",
+										"postfeedbacks"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "PATCH PostFeedback",
+							"request": {
+								"method": "PATCH",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "[\r\n    {\r\n        \"op\":\"replace\",\r\n        \"path\":\"/postFeedText\",\r\n        \"value\":\"thank you\"\r\n    }\r\n\r\n]",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "https://localhost:7080/api/users/2/posts/2/postfeedbacks/30",
+									"protocol": "https",
+									"host": [
+										"localhost"
+									],
+									"port": "7080",
+									"path": [
+										"api",
+										"users",
+										"2",
+										"posts",
+										"2",
+										"postfeedbacks",
+										"30"
+									]
+								}
+							},
+							"response": []
+						}
+					]
+				},
+				{
+					"name": "Features",
+					"item": [
+						{
+							"name": "GET Features ( For each post )",
+							"request": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "https://localhost:{{portNumber}}/api/users/2/posts/2/features",
+									"protocol": "https",
+									"host": [
+										"localhost"
+									],
+									"port": "{{portNumber}}",
+									"path": [
+										"api",
+										"users",
+										"2",
+										"posts",
+										"2",
+										"features"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "GET Feature ( For specific post )",
+							"request": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "https://localhost:{{portNumber}}/api/users/2/posts/1/features/1",
+									"protocol": "https",
+									"host": [
+										"localhost"
+									],
+									"port": "{{portNumber}}",
+									"path": [
+										"api",
+										"users",
+										"2",
+										"posts",
+										"1",
+										"features",
+										"1"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "POST Feature ( For specific post )",
+							"request": {
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\r\n    \"FeaturesName\" : \"nice place\"\r\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "https://localhost:{{portNumber}}/api/users/2/posts/1/features",
+									"protocol": "https",
+									"host": [
+										"localhost"
+									],
+									"port": "{{portNumber}}",
+									"path": [
+										"api",
+										"users",
+										"2",
+										"posts",
+										"1",
+										"features"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "DELETE Feature (For specific user )",
+							"request": {
+								"method": "DELETE",
+								"header": [],
+								"url": {
+									"raw": "https://localhost:{{portNumber}}/api/users/2/posts/2/features/11",
+									"protocol": "https",
+									"host": [
+										"localhost"
+									],
+									"port": "{{portNumber}}",
+									"path": [
+										"api",
+										"users",
+										"2",
+										"posts",
+										"2",
+										"features",
+										"11"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "PUT Feature ( For specific user )",
+							"request": {
+								"method": "PUT",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\r\n     \"featuresName\": \"good looking\"\r\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "https://localhost:{{portNumber}}/api/users/2/posts/2/features/12",
+									"protocol": "https",
+									"host": [
+										"localhost"
+									],
+									"port": "{{portNumber}}",
+									"path": [
+										"api",
+										"users",
+										"2",
+										"posts",
+										"2",
+										"features",
+										"12"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "PATCH Feature",
+							"request": {
+								"method": "PATCH",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "[\r\n     {\r\n        \"op\":\"replace\",\r\n        \"path\":\"/featuresName\",\r\n        \"value\":\"comfortable\"\r\n    }\r\n]",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "https://localhost:{{portNumber}}/api/users/2/posts/2/features/12",
+									"protocol": "https",
+									"host": [
+										"localhost"
+									],
+									"port": "{{portNumber}}",
+									"path": [
+										"api",
+										"users",
+										"2",
+										"posts",
+										"2",
+										"features",
+										"12"
+									]
+								}
+							},
+							"response": []
+						}
+					]
+				},
+				{
+					"name": "Pictures",
+					"item": [
+						{
+							"name": "GET Picture (For a Post by Id)",
+							"protocolProfileBehavior": {
+								"disableBodyPruning": true
+							},
+							"request": {
+								"method": "GET",
+								"header": [],
+								"body": {
+									"mode": "formdata",
+									"formdata": []
+								},
+								"url": {
+									"raw": "https://localhost:{{portNumber}}/api/posts/2/pictures/1",
+									"protocol": "https",
+									"host": [
+										"localhost"
+									],
+									"port": "{{portNumber}}",
+									"path": [
+										"api",
+										"posts",
+										"2",
+										"pictures",
+										"1"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "GET Pictures ( for a post : doesn't work right now)",
+							"request": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "https://localhost:{{portNumber}}/api/posts/2/pictures",
+									"protocol": "https",
+									"host": [
+										"localhost"
+									],
+									"port": "{{portNumber}}",
+									"path": [
+										"api",
+										"posts",
+										"2",
+										"pictures"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "POST Picture (For specific post)",
+							"request": {
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "formdata",
+									"formdata": [
+										{
+											"key": "Data.Images",
+											"type": "file",
+											"src": "/C:/Users/Mostafa Elsayad/Pictures/pictures/firewatch-deer-at-purple-mountains-zaan9skdp07kbdwr (1).jpg"
+										}
+									]
+								},
+								"url": {
+									"raw": "https://localhost:{{portNumber}}/api/posts/2/pictures",
+									"protocol": "https",
+									"host": [
+										"localhost"
+									],
+									"port": "{{portNumber}}",
+									"path": [
+										"api",
+										"posts",
+										"2",
+										"pictures"
+									]
+								}
+							},
+							"response": []
+						}
+					]
+				},
+				{
+					"name": "Notifications",
+					"item": [
+						{
+							"name": "GET Notifications (For Specific User)",
+							"request": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "https://localhost:{{portNumber}}/api/users/2/notifications",
+									"protocol": "https",
+									"host": [
+										"localhost"
+									],
+									"port": "{{portNumber}}",
+									"path": [
+										"api",
+										"users",
+										"2",
+										"notifications"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "GET Notification (For specific user)",
+							"request": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "https://localhost:{{portNumber}}/api/users/2/notifications/2",
+									"protocol": "https",
+									"host": [
+										"localhost"
+									],
+									"port": "{{portNumber}}",
+									"path": [
+										"api",
+										"users",
+										"2",
+										"notifications",
+										"2"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "POST Notification (For specific user)",
+							"request": {
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\r\n    \"Message\":\"hello\"\r\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "https://localhost:{{portNumber}}/api/users/2/notifications",
+									"protocol": "https",
+									"host": [
+										"localhost"
+									],
+									"port": "{{portNumber}}",
+									"path": [
+										"api",
+										"users",
+										"2",
+										"notifications"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "PATCH Notification (For specific user)",
+							"request": {
+								"method": "PUT",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\r\n    \"Message\":\"well done\"\r\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "https://localhost:{{portNumber}}/api/users/2/notifications/2",
+									"protocol": "https",
+									"host": [
+										"localhost"
+									],
+									"port": "{{portNumber}}",
+									"path": [
+										"api",
+										"users",
+										"2",
+										"notifications",
+										"2"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "DELETE Notification (For specific user)",
+							"request": {
+								"method": "DELETE",
+								"header": [],
+								"url": {
+									"raw": "https://localhost:{{portNumber}}/api/users/2/notifications/2",
+									"protocol": "https",
+									"host": [
+										"localhost"
+									],
+									"port": "{{portNumber}}",
+									"path": [
+										"api",
+										"users",
+										"2",
+										"notifications",
+										"2"
+									]
+								}
+							},
+							"response": []
+						}
+					]
+				},
+				{
+					"name": "Chat",
+					"item": [
+						{
+							"name": "POST Message ( send message to user)",
+							"request": {
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\r\n    \"message\":\"how are you\"\r\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "https://localhost:{{portNumber}}/api/users/2/chats?SearchQuery=mostafa_elsayad",
+									"protocol": "https",
+									"host": [
+										"localhost"
+									],
+									"port": "{{portNumber}}",
+									"path": [
+										"api",
+										"users",
+										"2",
+										"chats"
+									],
+									"query": [
+										{
+											"key": "SearchQuery",
+											"value": "mostafa_elsayad"
+										}
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "GET (all messages between two users)",
+							"request": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "https://localhost:{{portNumber}}/api/users/2/chats?SearchQuery=mostafa_elsayad",
+									"protocol": "https",
+									"host": [
+										"localhost"
+									],
+									"port": "{{portNumber}}",
+									"path": [
+										"api",
+										"users",
+										"2",
+										"chats"
+									],
+									"query": [
+										{
+											"key": "SearchQuery",
+											"value": "mostafa_elsayad"
+										}
+									]
+								}
+							},
+							"response": []
+						}
+					]
+				},
+				{
+					"name": "User Feedback",
+					"item": [
+						{
+							"name": "POST Feedback (TO specific user)",
+							"request": {
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\r\n    \"FeedbackText\":\"nice person\"\r\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "https://localhost:{{portNumber}}/api/users/2/userfeedback?SearchQuery=aalaa_ibraheem_nova",
+									"protocol": "https",
+									"host": [
+										"localhost"
+									],
+									"port": "{{portNumber}}",
+									"path": [
+										"api",
+										"users",
+										"2",
+										"userfeedback"
+									],
+									"query": [
+										{
+											"key": "SearchQuery",
+											"value": "aalaa_ibraheem_nova"
+										}
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "GET Feedbacks (of a user)",
+							"request": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "https://localhost:{{portNumber}}/api/user/userfeedbacks?SearchQuery=aalaa_ibraheem_nova",
+									"protocol": "https",
+									"host": [
+										"localhost"
+									],
+									"port": "{{portNumber}}",
+									"path": [
+										"api",
+										"user",
+										"userfeedbacks"
+									],
+									"query": [
+										{
+											"key": "SearchQuery",
+											"value": "aalaa_ibraheem_nova"
+										}
+									]
+								}
+							},
+							"response": []
+						}
+					]
+				},
+				{
+					"name": "Post Favorites",
+					"item": [
+						{
+							"name": "POST favorite ( Add post to favorites)",
+							"request": {
+								"method": "POST",
+								"header": [],
+								"url": {
+									"raw": "https://localhost:{{portNumber}}/api/users/2/posts/2/postfavouriate",
+									"protocol": "https",
+									"host": [
+										"localhost"
+									],
+									"port": "{{portNumber}}",
+									"path": [
+										"api",
+										"users",
+										"2",
+										"posts",
+										"2",
+										"postfavouriate"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "GET Favorited Posts ( of user )",
+							"request": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "https://localhost:{{portNumber}}/api/users/2/postfavouriate",
+									"protocol": "https",
+									"host": [
+										"localhost"
+									],
+									"port": "{{portNumber}}",
+									"path": [
+										"api",
+										"users",
+										"2",
+										"postfavouriate"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "GET Favorited Post ( of user )",
+							"request": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "https://localhost:{{portNumber}}/api/users/2/posts/2/postfavouriate",
+									"protocol": "https",
+									"host": [
+										"localhost"
+									],
+									"port": "{{portNumber}}",
+									"path": [
+										"api",
+										"users",
+										"2",
+										"posts",
+										"2",
+										"postfavouriate"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "DELETE Post From favorites",
+							"request": {
+								"method": "DELETE",
+								"header": [],
+								"url": {
+									"raw": "https://localhost:{{portNumber}}/api/users/2/posts/2/postfavouriate",
+									"protocol": "https",
+									"host": [
+										"localhost"
+									],
+									"port": "{{portNumber}}",
+									"path": [
+										"api",
+										"users",
+										"2",
+										"posts",
+										"2",
+										"postfavouriate"
+									]
+								}
+							},
+							"response": []
+						}
+					]
+				},
+				{
+					"name": "User Ban",
+					"item": [
+						{
+							"name": "POST ( ban user )",
+							"request": {
+								"method": "POST",
+								"header": [],
+								"url": {
+									"raw": "https://localhost:{{portNumber}}/api/userBan/ban?SearchQuery=98765432109877",
+									"protocol": "https",
+									"host": [
+										"localhost"
+									],
+									"port": "{{portNumber}}",
+									"path": [
+										"api",
+										"userBan",
+										"ban"
+									],
+									"query": [
+										{
+											"key": "SearchQuery",
+											"value": "98765432109877"
+										}
+									]
+								}
+							},
+							"response": []
+						}
+					]
+				},
+				{
+					"name": "Authentication",
+					"item": [
+						{
+							"name": "Verify that a user in the database and return a token to use it in other endpoints",
+							"request": {
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\r\n  \"userName\": \"abdelrahman_mansour\",\r\n  \"userMail\": \"abdelrahmanmansour@gmail.com\",\r\n  \"password\": \"123456789\"\r\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "https://localhost:{{portNumber}}/api/authentication/authenticate",
+									"protocol": "https",
+									"host": [
+										"localhost"
+									],
+									"port": "{{portNumber}}",
+									"path": [
+										"api",
+										"authentication",
+										"authenticate"
+									]
+								}
+							},
+							"response": []
+						}
+					]
+				}
+			]
+		}
+	],
+	"variable": [
+		{
+			"key": "portNumber",
+			"value": "7080"
+		}
+	]
+}
