@@ -10,7 +10,7 @@ using sakeny.Services;
 
 namespace sakeny.Controllers
 {
-    [Route("api/users/{userid}/posts/{postid}/postfeedbacks")]
+    [Route("api/users/{userId}/posts/{postId}/postfeedbacks")]
     [Authorize]
     [ApiController]
     public class PostFeedbackController : ControllerBase
@@ -35,7 +35,7 @@ namespace sakeny.Controllers
             return Ok(_mapper.Map<IEnumerable<PostFeedbackForReturnDto>>(postFeedbacksForUser));
         }
 
-        [HttpGet("{feedbackid}", Name = "GetPostFeedback")]
+        [HttpGet("{feedbackId}", Name = "GetPostFeedback")]
         public async Task<IActionResult> GetPostFeedback(int userId,int postId, int feedbackId)
         {
             if (!await _userInfoRepository.UserExistsAsync(userId))
@@ -82,7 +82,7 @@ namespace sakeny.Controllers
             return CreatedAtRoute("GetPostFeedback", new { userId = userId, postId = postId, feedbackId = postFeedbackEntity.PostFeedId }, postFeedbackToReturn);
         }
 
-        [HttpPut("{feedbackid}")]
+        [HttpPut("{feedbackId}")]
         public async Task<ActionResult> UpdatePostFeedback(int userId,int postId, int feedbackId, PostFeedbackForUpdateDto postFeedbackForUpdateDto)
         {
             if (!await _userInfoRepository.PostExistsAsync(userId,postId))

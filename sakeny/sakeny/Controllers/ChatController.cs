@@ -8,7 +8,7 @@ using System.Text.Json;
 
 namespace sakeny.Controllers
 {
-    [Route("api/users/{userid}/chats")]
+    [Route("api/users/{userId}/chats")]
     [Authorize]
     [ApiController]
     public class ChatController : ControllerBase
@@ -23,10 +23,10 @@ namespace sakeny.Controllers
         }
 
         [HttpGet]
-        public async Task<IActionResult> GetChatHistory(int userid, string? name, string? SearchQuery,
+        public async Task<IActionResult> GetChatHistory(int userId, string? name, string? SearchQuery,
                        int pageNumber = 1, int pageSize = 10)
         {
-            var sender = await _userInfoRepository.GetUserAsync(userid, false);
+            var sender = await _userInfoRepository.GetUserAsync(userId, false);
             if (sender == null)
             {
                 return NotFound();
@@ -42,11 +42,11 @@ namespace sakeny.Controllers
         }
 
         [HttpPost]
-        public async Task<IActionResult> SendMessage(int userid, MessageForCreationDto messageForCreationDto,
+        public async Task<IActionResult> SendMessage(int userId, MessageForCreationDto messageForCreationDto,
             string? name, string? SearchQuery,
             int pageNumber = 1, int pageSize = 10)
         {
-            var sender = await _userInfoRepository.GetUserAsync(userid, false);
+            var sender = await _userInfoRepository.GetUserAsync(userId, false);
             if (sender == null)
             {
                 return NotFound();
@@ -63,7 +63,7 @@ namespace sakeny.Controllers
             }
 
 
-            await _userInfoRepository.SendMessageAsync(userid, receiverName.UserId, messageForCreationDto.Message);
+            await _userInfoRepository.SendMessageAsync(userId, receiverName.UserId, messageForCreationDto.Message);
             await _userInfoRepository.SaveChangesAsync();
             return Ok();
         }

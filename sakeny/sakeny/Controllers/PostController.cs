@@ -3,6 +3,7 @@ using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.JsonPatch;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.SignalR;
 using sakeny.Entities;
 using sakeny.Models.PostDtos;
 using sakeny.Services;
@@ -10,19 +11,24 @@ using System.Text.Json;
 
 namespace sakeny.Controllers
 {
-    [Route("api/users/{userid}/posts")]
-    [Authorize]
+    [Route("api/users/{userId}/posts")]
+    //[Authorize]
     [ApiController]
     public class PostController : ControllerBase
     {
         private readonly IUserInfoRepository _userInfoRepository;
         private readonly IMapper _mapper;
+        private readonly IHubContext<NotificationHub> _hubContext;
+
         const int maxPageSize = 20;
 
-        public PostController(IUserInfoRepository userInfoRepository, IMapper mapper)
+        public PostController(IUserInfoRepository userInfoRepository, IMapper mapper,
+        IHubContext<NotificationHub> hubContext)
         {
             _userInfoRepository = userInfoRepository ?? throw new ArgumentNullException(nameof(userInfoRepository));
             _mapper = mapper ?? throw new ArgumentNullException(nameof(mapper));
+            _hubContext = hubContext;
+
         }
 
 
@@ -84,7 +90,7 @@ namespace sakeny.Controllers
                                new { userId, postId = postEntity.PostId },
                                               postToReturn);
         }
-        [HttpPut("{postid}")]
+        [HttpPut("{postId}")]
         public async Task<IActionResult> UpdatePost (int userId , int postId , PostForUpdateDto postForUpdateDto)
         {
             if(! await _userInfoRepository.UserExistsAsync(userId))
@@ -106,7 +112,7 @@ namespace sakeny.Controllers
             return NoContent();
 
         }
-        [HttpPatch("{postid}")]
+        [HttpPatch("{postId}")]
         public async Task<IActionResult> PartialUpdatePost(int userId, int postId, JsonPatchDocument<PostForUpdateDto> patchDocument)
         {
             if (!await _userInfoRepository.UserExistsAsync(userId))
@@ -142,7 +148,7 @@ namespace sakeny.Controllers
 
 
 
-        [HttpPatch("{postid}/statues")]
+        [HttpPatch("{postId}/statues")]
         public async Task<IActionResult> PartialUpdatePostForStatues(int userId, int postId,JsonPatchDocument< PostForUpdateDto> patchDocument)
         {
             if (!await _userInfoRepository.UserExistsAsync(userId))
@@ -171,10 +177,20 @@ namespace sakeny.Controllers
 
             _mapper.Map(postToPatch, postEntity);
             await _userInfoRepository.SaveChangesAsync();
+
+            var users = await _userInfoRepository.GetUsersWhoFavouriatePostAsync(postId);
+
+            foreach (var user in users)
+            {
+                var message = $"The status of post {postId} has been changed to {postToPatch.PostStatue}";
+                await _hubContext.Clients.User(user.UserId.ToString()).SendAsync("ReceiveNotification", message);
+            }
+
             return NoContent();
 
         }
 
+       
 
         [HttpDelete("{postId}")]
         public async Task<IActionResult> DeletePost(int userId, int postId)

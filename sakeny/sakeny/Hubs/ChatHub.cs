@@ -1,4 +1,6 @@
-﻿using Microsoft.AspNetCore.SignalR;
+﻿using AutoMapper;
+using Microsoft.AspNetCore.SignalR;
+using Microsoft.EntityFrameworkCore;
 using sakeny.DbContexts;
 using sakeny.Entities;
 using sakeny.Models.ChatDtos;
@@ -11,28 +13,46 @@ namespace sakeny.Hubs
     {
         private readonly HOUSE_RENT_DBContext _context;
         private readonly IUserInfoRepository _userInfoRepository;
+        private readonly IMapper _mapper;
 
-        public ChatHub(HOUSE_RENT_DBContext context , IUserInfoRepository userInfoRepository)
+        public ChatHub(HOUSE_RENT_DBContext context , IUserInfoRepository userInfoRepository , IMapper mapper)
         {
             _context = context;
             _userInfoRepository = userInfoRepository;
+            _mapper = mapper;
         }
 
         public async Task SendMessage(string senderName, string receiverName, string message)
         {
-            var (sender,pagniationSender) = await _userInfoRepository.GetUsersAsync(string.Empty,senderName,1,10);
+
+            
+
+            
+
+
+            if (string.IsNullOrEmpty(message) || message.Length > 500) // check message length
+            {
+                // handle invalid message
+                return;
+            }
+
+            if (senderName == receiverName) // check if sender and receiver are the same
+            {
+                // handle same sender and receiver
+                return;
+            }
+
+            var sender = await _userInfoRepository.GetUserAsync(senderName);
             if (sender == null)
             {
                 return;
             }
-            var (receiver, pagniationReceiver) = await _userInfoRepository.GetUsersAsync(string.Empty, receiverName, 1, 10);
+
+            var receiver = await _userInfoRepository.GetUserAsync(receiverName);
             if (receiver == null)
             {
                 return;
             }
-
-
-            await Clients.User(receiverName).SendAsync("ReceiveMessage", senderName, message);
 
             var userChat = new UserChatTbl
             {
@@ -44,7 +64,43 @@ namespace sakeny.Hubs
 
             _context.UserChatTbls.Add(userChat);
             await _context.SaveChangesAsync();
+
+            await Clients.User(receiverName).SendAsync("ReceiveMessage", senderName, message);
+
+            
         }
+
+        public async Task SendChatHistory(string user1, string user2)
+        {
+            var chatHistory = await GetChatHistory(user1, user2);
+            Console.WriteLine($"SendChatHistory called with {user1} and {user2}. Sending {chatHistory.Count()} messages.");
+
+            await Clients.All.SendAsync("ReceiveChatHistory", chatHistory);
+        }
+
+
+        public async Task<IEnumerable<UserChatTbl>> GetChatHistory(string user1, string user2)
+        {
+            return await _context.UserChatTbls
+                .Where(chat =>
+                    (chat.UserChatFrom == user1 && chat.UserChatTo == user2) ||
+                    (chat.UserChatFrom == user2 && chat.UserChatTo == user1))
+                .OrderBy(chat => chat.UserChatDate)
+                .ToListAsync();
+           // return _mapper.Map<IEnumerable<ChatDto>>(chat);
+
+        }
+
+        
+
+    }
+
+    public class ChatDto
+    {
+        public string UserChatFrom { get; set; }
+        public string UserChatTo { get; set; }
+        public string UserChatText { get; set; }
+        public DateTime UserChatDate { get; set; }
     }
 
 

@@ -9,7 +9,7 @@ using sakeny.Services;
 
 namespace sakeny.Controllers
 {
-    [Route("api/users/{userid}/notifications")]
+    [Route("api/users/{userId}/notifications")]
     [Authorize]
     [ApiController]
     public class NotificationsController : ControllerBase

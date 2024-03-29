@@ -1,32 +1,30 @@
-﻿using AutoMapper;
-using Microsoft.AspNetCore.Authorization;
-using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.EntityFrameworkCore;
-using sakeny.Entities;
-using sakeny.Models.PicturesDtos;
+using System;
+using System.Collections.Generic;
+using System.Threading.Tasks;
+using AutoMapper;
 using sakeny.Services;
-using System.Net.Mime;
+using System.Linq;
+using sakeny.Models.PicturesDtos;
+using sakeny.Entities;
 
 namespace sakeny.Controllers
 {
-    [Route("api/posts/{postId}/pictures")]
-    [Authorize]
+    [Route("api/posts/{postId}/images")]
     [ApiController]
-    public class PicutresController : ControllerBase
+    public class ImagesController : ControllerBase
     {
         private readonly IMapper _mapper;
         private readonly IUserInfoRepository _userInfoRepository;
 
-        public PicutresController(IMapper mapper, IUserInfoRepository userInfoRepository)
+        public ImagesController(IMapper mapper, IUserInfoRepository userInfoRepository)
         {
             _mapper = mapper ?? throw new ArgumentNullException(nameof(mapper));
             _userInfoRepository = userInfoRepository ?? throw new ArgumentNullException(nameof(userInfoRepository));
         }
 
-
-        [HttpGet(Name = "GetPictures")]
-        public async Task<IActionResult> GetPictures(int postId)
+        [HttpGet]
+        public async Task<IActionResult> GetImages(int postId)
         {
             if (!await _userInfoRepository.PostExistsAsync(postId))
             {
@@ -34,39 +32,36 @@ namespace sakeny.Controllers
             }
 
             var Pictures = await _userInfoRepository.GetPicturesForPostAsync(postId);
-            var imageList = new List<byte[]>();
+            var imageList = new List<string>();
             foreach (var picture in Pictures)
             {
-                imageList.Add(picture.Picture);
+                var base64Image = Convert.ToBase64String(picture.Picture);
+                imageList.Add($"data:image/jpeg;base64,{base64Image}");
             }
 
-            var combinedImageData = imageList.SelectMany(p => p).ToArray();
-
-            return File(combinedImageData, MediaTypeNames.Image.Jpeg);
-
+            return Ok(imageList);
         }
 
         [HttpGet("{picId}")]
-        public async Task<IActionResult> GetPicture(int postId, int picId)
+        public async Task<IActionResult> GetImage(int postId, int picId)
         {
             if (!await _userInfoRepository.PostExistsAsync(postId))
             {
-                return BadRequest("This Post is not exist");
+                return BadRequest("This Post does not exist");
             }
             if (!await _userInfoRepository.PictureExistsAsync(postId, picId))
             {
-                return BadRequest("This Picture is not exist");
+                return BadRequest("This Picture does not exist");
             }
 
-            var Pictures = await _userInfoRepository.GetPictureForPostAsync(postId, picId);
-            var combinedImageData = Pictures.Picture;
+            var picture = await _userInfoRepository.GetPictureForPostAsync(postId, picId);
+            var base64Image = Convert.ToBase64String(picture.Picture);
 
-            return File(combinedImageData, MediaTypeNames.Image.Jpeg);
-
+            return Ok($"data:image/jpeg;base64,{base64Image}");
         }
 
         [HttpPost]
-        public async Task<IActionResult> PostPictures(int postId,
+        public async Task<IActionResult> ImageUpload(int postId,
             [FromForm(Name = "Data")] PicturesForCreationDto picturesForCreation)
         {
             if (picturesForCreation == null || picturesForCreation.Images == null || picturesForCreation.Images.Count == 0)
@@ -109,7 +104,7 @@ namespace sakeny.Controllers
 
 
         [HttpDelete("{picId}")]
-        public async Task<IActionResult> DeletePicture(int postId, int picId)
+        public async Task<IActionResult> DeleteImage(int postId, int picId)
         {
             if (!await _userInfoRepository.PostExistsAsync(postId))
             {
@@ -130,6 +125,6 @@ namespace sakeny.Controllers
 
             return NoContent();
         }
+    
     }
 }
-

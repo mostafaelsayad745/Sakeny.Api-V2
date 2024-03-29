@@ -7,7 +7,7 @@ using sakeny.Services;
 
 namespace sakeny.Controllers
 {
-    [Route("api/users/{userid}")]
+    [Route("api/users/{userId}")]
     [Authorize]
     [ApiController]
     public class PostFavouriateController : ControllerBase
@@ -24,69 +24,69 @@ namespace sakeny.Controllers
 
 
         [HttpGet("postfavouriate")]
-        public async Task<IActionResult> GetPostsFavouriates(int userid)
+        public async Task<IActionResult> GetPostsFavouriates(int userId)
         {
-            var user = await _userInfoRepository.GetUserAsync(userid, false);
+            var user = await _userInfoRepository.GetUserAsync(userId, false);
             if (user == null)
                 return NotFound();
 
-            var postFavouriates = await _userInfoRepository.GetPostFavouriatesAsync(userid);
+            var postFavouriates = await _userInfoRepository.GetPostFavouriatesAsync(userId);
             var postFavouriatesForReturn = _mapper.Map<IEnumerable<PostForReturnDto>>(postFavouriates);
             return Ok(postFavouriates);
         }
 
     
 
-    [HttpGet("posts/{postid}/postfavouriate")]
-    public async Task<IActionResult> GetPostFavouriate(int userid, int postid)
+    [HttpGet("posts/{postId}/postfavouriate")]
+    public async Task<IActionResult> GetPostFavouriate(int userId, int postId)
     {
-        var user = await _userInfoRepository.GetUserAsync(userid, false);
+        var user = await _userInfoRepository.GetUserAsync(userId, false);
         if (user == null)
             return NotFound();
 
-        var post = await _userInfoRepository.GetPostForUserAsync(userid, postid);
+        var post = await _userInfoRepository.GetPostForUserAsync(userId, postId);
             if (post == null)
                 return NotFound();
 
 
 
-        var postFavouriate = await _userInfoRepository.GetPostFavouriateForUserAsync(userid, postid);
+        var postFavouriate = await _userInfoRepository.GetPostFavouriateForUserAsync(userId, postId);
 
         return Ok(_mapper.Map<PostForReturnDto>(postFavouriate.Post));
     }
 
-    [HttpPost("posts/{postid}/postfavouriate")]
-    public async Task<IActionResult> PostFavouriate(int userid, int postid)
+    [HttpPost("posts/{postId}/postfavouriate")]
+    public async Task<IActionResult> PostFavouriate(int userId, int postId)
     {
-        var post = await _userInfoRepository.GetPostForUserAsync(postid);
+        var post = await _userInfoRepository.GetPostForUserAsync(postId);
         if (post == null)
             return NotFound();
 
 
 
-        var postFavouriate = await _userInfoRepository.GetPostFavouriateForUserAsync(userid, postid);
+        var postFavouriate = await _userInfoRepository.GetPostFavouriateForUserAsync(userId, postId);
 
         if (postFavouriate != null)
             return BadRequest("You already favouriate this post");
 
 
-        await _userInfoRepository.AddPostToFaviourates(userid , postid);
+        await _userInfoRepository.AddPostToFaviourates(userId , postId);
         await _userInfoRepository.SaveChangesAsync();
 
         return Ok();
 
     }
 
-    [HttpDelete("posts/{postid}/postfavouriate")]
-    public async Task<IActionResult> DeletePostFavouriate(int userid, int postid)
+    [HttpDelete("posts/{postId}/postfavouriate")]
+    public async Task<IActionResult> DeletePostFavouriate(int userId, int postId)
     {
-        var post = await _userInfoRepository.GetPostForUserAsync(postid);
+        var post = await _userInfoRepository.GetPostForUserAsync(postId);
         if (post == null)
             return NotFound();
 
 
 
-        var postFavouriate = await _userInfoRepository.GetPostFavouriateForUserAsync(userid, postid);
+        var postFavouriate = await _userInfoRepository.GetPostFavouriateForUserAsync(userId, postId);
 
         if (postFavouriate == null)
             return BadRequest("You did not favouriate this post");

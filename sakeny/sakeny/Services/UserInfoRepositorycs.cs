@@ -107,6 +107,14 @@ namespace sakeny.Services
             return await _context.UsersTbls.OrderBy(u => u.UserName).ToListAsync();
         }
 
+        public async Task<UsersTbl?> GetUserAsync(string userName)
+        {
+            userName = userName.Trim();
+            return await _context.UsersTbls
+                .Where(u => u.UserName.Contains(userName))
+                .FirstOrDefaultAsync();
+        }
+
 
 
         public async Task<(IEnumerable<UsersTbl>, PaginationMetadata)> GetUsersAsync(string? name, string? SearchQuery
@@ -459,6 +467,12 @@ namespace sakeny.Services
         public void DeletePostFavouriate(PostFaviourateTbl postFavouriate)
         {
             _context.PostFaviourateTbls.Remove(postFavouriate);
+        }
+
+
+        public async Task<IEnumerable<UsersTbl>> GetUsersWhoFavouriatePostAsync(int postId)
+        {
+            return await _context.PostFaviourateTbls.Where(p => p.PostId == postId).Select(p => p.User).ToListAsync();
         }
 
         // defination for the user ban

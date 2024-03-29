@@ -46,11 +46,11 @@ namespace sakeny.Controllers
             return Ok(_mapper.Map<IEnumerable<UserForReturnDto>>(usersFromRepo));
         }
 
-        [HttpGet("{id}", Name = "GetUser")]
+        [HttpGet("{userId}", Name = "GetUser")]
         [Authorize]
-        public async Task<IActionResult> GetUser(int id, bool includePostFeedbacks)
+        public async Task<IActionResult> GetUser(int userId, bool includePostFeedbacks)
         {
-            var userFromRepo = await _userInfoRepository.GetUserAsync(id, includePostFeedbacks);
+            var userFromRepo = await _userInfoRepository.GetUserAsync(userId, includePostFeedbacks);
             if (userFromRepo == null)
             {
                 return NotFound();
@@ -99,11 +99,11 @@ namespace sakeny.Controllers
             //return CreatedAtRoute("GetUser", new { id = userToCreate.UserId }, userToCreate);
         }
 
-        [HttpPut("{userid}")]
+        [HttpPut("{userId}")]
         [Authorize]
-        public async Task<IActionResult> UpdateUser(int userid, UserForUpdateDto userForUpdateDto)
+        public async Task<IActionResult> UpdateUser(int userId, UserForUpdateDto userForUpdateDto)
         {
-            if (!await _userInfoRepository.UserExistsAsync(userid))
+            if (!await _userInfoRepository.UserExistsAsync(userId))
             {
                 return NotFound();
             }
@@ -113,7 +113,7 @@ namespace sakeny.Controllers
                 return BadRequest("you must give me the user information");
             }
 
-            var userEntity = await _userInfoRepository.GetUserAsync(userid, false);
+            var userEntity = await _userInfoRepository.GetUserAsync(userId, false);
             _mapper.Map(userForUpdateDto, userEntity);
             await _userInfoRepository.SaveChangesAsync();
             return NoContent();
@@ -140,18 +140,18 @@ namespace sakeny.Controllers
             //return NoContent();
         }
 
-        [HttpPatch("{userid}")]
+        [HttpPatch("{userId}")]
         [Authorize]
-        public async Task<IActionResult> PartialUpdateUser(int userid,
+        public async Task<IActionResult> PartialUpdateUser(int userId,
             JsonPatchDocument<UserForUpdateDto> patchDocument)
         {
 
-            if (!await _userInfoRepository.UserExistsAsync(userid))
+            if (!await _userInfoRepository.UserExistsAsync(userId))
             {
                 return NotFound();
             }
 
-            var userEnitiy = await _userInfoRepository.GetUserAsync(userid, false);
+            var userEnitiy = await _userInfoRepository.GetUserAsync(userId, false);
             if (userEnitiy == null)
             {
                 return NotFound();
@@ -222,15 +222,15 @@ namespace sakeny.Controllers
             //return NoContent();
         }
 
-        [HttpDelete("{userid}")]
+        [HttpDelete("{userId}")]
         [Authorize]
-        public async Task<IActionResult> DeleteUser(int userid)
+        public async Task<IActionResult> DeleteUser(int userId)
         {
-            if (!await _userInfoRepository.UserExistsAsync(userid))
+            if (!await _userInfoRepository.UserExistsAsync(userId))
             {
                 return NotFound();
             }
-            var userEntity = await _userInfoRepository.GetUserAsync(userid, false);
+            var userEntity = await _userInfoRepository.GetUserAsync(userId, false);
             if (userEntity == null)
             {
                 return NotFound();

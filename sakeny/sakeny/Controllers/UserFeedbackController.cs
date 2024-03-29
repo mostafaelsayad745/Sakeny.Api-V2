@@ -45,12 +45,12 @@ namespace sakeny.Controllers
        
        
 
-        [HttpPost("users/{userid}/userfeedback")]
-        public async Task<IActionResult> SendFeedbackToUser(int userid, UserFeedbackDto userFeedbackDto,
+        [HttpPost("users/{userId}/userfeedback")]
+        public async Task<IActionResult> SendFeedbackToUser(int userId, UserFeedbackDto userFeedbackDto,
             string? name, string? SearchQuery,
             int pageNumber = 1, int pageSize = 10)
         {
-            var sender = await _userInfoRepository.GetUserAsync(userid, false);
+            var sender = await _userInfoRepository.GetUserAsync(userId, false);
             if (sender == null)
             {
                 return NotFound();
@@ -67,17 +67,17 @@ namespace sakeny.Controllers
             }
 
 
-            await _userInfoRepository.AddFeedbackToUser(userid, receiverName.UserId, userFeedbackDto.FeedbackText);
+            await _userInfoRepository.AddFeedbackToUser(userId, receiverName.UserId, userFeedbackDto.FeedbackText);
             await _userInfoRepository.SaveChangesAsync();
             return Ok();
         }
 
-        [HttpPut("users/{userid}/userfeedback")]
-        public async Task<IActionResult> UpdateFeedbackToUser(int userid, UserFeedbackDto userFeedbackDto,
+        [HttpPut("users/{userId}/userfeedback")]
+        public async Task<IActionResult> UpdateFeedbackToUser(int userId, UserFeedbackDto userFeedbackDto,
                        string? name, string? SearchQuery,
                                   int pageNumber = 1, int pageSize = 10)
         {
-            var sender = await _userInfoRepository.GetUserAsync(userid, false);
+            var sender = await _userInfoRepository.GetUserAsync(userId, false);
             if (sender == null)
             {
                 return NotFound();
@@ -93,7 +93,7 @@ namespace sakeny.Controllers
                 return NotFound();
             }
 
-            var feedback = await _userInfoRepository.GetFeedbackForUserAsync(userid, receiverName.UserId);
+            var feedback = await _userInfoRepository.GetFeedbackForUserAsync(userId, receiverName.UserId);
             if (feedback == null)
             {
                 return NotFound();
@@ -104,12 +104,12 @@ namespace sakeny.Controllers
             return Ok();
         }
 
-        [HttpDelete("users/{userid}/userfeedback")]
-        public async Task<IActionResult> DeleteFeedbackToUser(int userid, 
+        [HttpDelete("users/{userId}/userfeedback")]
+        public async Task<IActionResult> DeleteFeedbackToUser(int userId, 
                                   string? name, string? SearchQuery,
                                                                    int pageNumber = 1, int pageSize = 10)
         {
-            var sender = await _userInfoRepository.GetUserAsync(userid, false);
+            var sender = await _userInfoRepository.GetUserAsync(userId, false);
             if (sender == null)
             {
                 return NotFound();
@@ -125,7 +125,7 @@ namespace sakeny.Controllers
                 return NotFound();
             }
 
-            var feedback = await _userInfoRepository.GetFeedbackForUserAsync(userid, receiverName.UserId);
+            var feedback = await _userInfoRepository.GetFeedbackForUserAsync(userId, receiverName.UserId);
             if (feedback == null)
             {
                 return NotFound();

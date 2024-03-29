@@ -32,6 +32,16 @@ namespace sakeny
             options.SerializerSettings.ReferenceLoopHandling = Newtonsoft.Json.ReferenceLoopHandling.Ignore)
             .AddXmlDataContractSerializerFormatters();
 
+
+            builder.Services.AddEndpointsApiExplorer();
+            builder.Services.AddSwaggerGen();
+
+            //builder.Services.AddSwaggerGen(c =>
+            //{
+            //    c.SwaggerDoc("v1", new() { Title = "sakeny", Version = "v1" });
+            //    c.SchemaFilter<IgnorePropertiesSchemaFilter>();
+            //});
+
             builder.Services.AddDbContext<HOUSE_RENT_DBContext>(options =>
             {
                 options.UseSqlServer(builder.Configuration["ConnectionStrings:SakenyDbConnectionString"]);
@@ -109,6 +119,7 @@ namespace sakeny
             app.UseAuthorization();
 
             app.MapHub<ChatHub>("/chat");
+            app.MapHub<NotificationHub>("/notification");
 
             app.UseEndpoints(endpoints =>
             {

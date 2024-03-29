@@ -11,6 +11,8 @@ namespace sakeny.Services
         Task<(IEnumerable<UsersTbl>, PaginationMetadata)> GetUsersAsync
             (string? name, string? SearchQuery, int pageNumber, int pageSize);
 
+        Task<UsersTbl?> GetUserAsync(string userName);
+
         Task<UsersTbl?> GetUserAsync(int userId, bool includePostFeedbacks);
 
         Task AddUserAsync(UsersTbl user);
@@ -42,6 +44,8 @@ namespace sakeny.Services
         Task<PostsTbl?> GetPostForUserAsyncForUpdate(int userId, int postId);
         Task AddPostForUserAsync(int userId, PostsTbl postTbl);
         void DeletePost(PostsTbl postTbl);
+
+
 
 
         // defination for the features of the post
@@ -85,6 +89,8 @@ namespace sakeny.Services
         Task AddPostToFaviourates(int userId , int postId);
         void DeletePostFavouriate(PostFaviourateTbl postFavouriateTbl);
         Task<IEnumerable<PostsTbl>> GetPostFavouriatesAsync(int userId);
+
+        Task<IEnumerable<UsersTbl>> GetUsersWhoFavouriatePostAsync(int postId);
 
         // defination for the user ban
 

@@ -1,4 +1,5 @@
 ﻿using AutoMapper;
+using sakeny.Hubs;
 
 namespace sakeny.Profiles
 {
@@ -8,6 +9,7 @@ namespace sakeny.Profiles
         {
             CreateMap<Entities.UserChatTbl, Models.ChatDtos.MessageForReturnDto>();
             CreateMap<Models.ChatDtos.MessageForCreationDto, Entities.UserChatTbl>();
+            CreateMap<ChatDto, Entities.UserChatTbl>().ReverseMap();
         }
     }
 }
