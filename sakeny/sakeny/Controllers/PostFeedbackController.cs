@@ -11,7 +11,7 @@ using sakeny.Services;
 namespace sakeny.Controllers
 {
     [Route("api/users/{userId}/posts/{postId}/postfeedbacks")]
-    [Authorize]
+    //[Authorize]
     [ApiController]
     public class PostFeedbackController : ControllerBase
     {

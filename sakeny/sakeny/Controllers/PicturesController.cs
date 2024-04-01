@@ -7,11 +7,12 @@ using sakeny.Entities;
 using sakeny.Models.PicturesDtos;
 using sakeny.Services;
 using System.Net.Mime;
+using System.Text.Json;
 
 namespace sakeny.Controllers
 {
     [Route("api/posts/{postId}/pictures")]
-    [Authorize]
+    //[Authorize]
     [ApiController]
     public class PicutresController : ControllerBase
     {
@@ -102,11 +103,33 @@ namespace sakeny.Controllers
             }
 
             await _userInfoRepository.SaveChangesAsync();
+            Response.Headers.Add("X-Pagination", JsonSerializer.Serialize(pictures.Select(p => p.PostPicId).ToArray()));
 
             return NoContent();
         }
 
 
+        [HttpDelete]
+        public async Task<IActionResult> DeletePictures(int postId)
+        {
+            if (!await _userInfoRepository.PostExistsAsync(postId))
+            {
+                return BadRequest("This Post is not exist");
+            }
+
+            var pictures = await _userInfoRepository.GetPicturesForPostAsync(postId);
+            if (pictures != null)
+            {
+                foreach (var picture in pictures)
+                {
+                    _userInfoRepository.DeletePicture(picture);
+                }
+            }
+
+            await _userInfoRepository.SaveChangesAsync();
+
+            return NoContent();
+        }
 
         [HttpDelete("{picId}")]
         public async Task<IActionResult> DeletePicture(int postId, int picId)

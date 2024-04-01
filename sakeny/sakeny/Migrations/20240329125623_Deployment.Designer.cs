@@ -12,15 +12,15 @@ using sakeny.DbContexts;
 namespace sakeny.Migrations
 {
     [DbContext(typeof(HOUSE_RENT_DBContext))]
-    [Migration("20240228152252_Post_fav_table")]
-    partial class Post_fav_table
+    [Migration("20240329125623_Deployment")]
+    partial class Deployment
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
                 .UseCollation("Arabic_CI_AS")
-                .HasAnnotation("ProductVersion", "6.0.26")
+                .HasAnnotation("ProductVersion", "6.0.27")
                 .HasAnnotation("Relational:MaxIdentifierLength", 128);
 
             SqlServerModelBuilderExtensions.UseIdentityColumns(modelBuilder, 1L, 1);
@@ -75,6 +75,32 @@ namespace sakeny.Migrations
                     b.HasIndex("UserId");
 
                     b.ToTable("Notifications");
+                });
+
+            modelBuilder.Entity("sakeny.Entities.PostFaviourateTbl", b =>
+                {
+                    b.Property<decimal>("PostFavId")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("numeric(18,0)")
+                        .HasColumnName("POST_FAV_ID");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<decimal>("PostFavId"), 1L, 1);
+
+                    b.Property<decimal>("PostId")
+                        .HasColumnType("numeric(18,0)")
+                        .HasColumnName("POST_ID");
+
+                    b.Property<decimal>("UserId")
+                        .HasColumnType("numeric(18,0)")
+                        .HasColumnName("USER_ID");
+
+                    b.HasKey("PostFavId");
+
+                    b.HasIndex("PostId");
+
+                    b.HasIndex("UserId");
+
+                    b.ToTable("POST_FAV_TBL");
                 });
 
             modelBuilder.Entity("sakeny.Entities.PostFeaturesTbl", b =>
@@ -444,6 +470,25 @@ namespace sakeny.Migrations
                     b.Navigation("User");
                 });
 
+            modelBuilder.Entity("sakeny.Entities.PostFaviourateTbl", b =>
+                {
+                    b.HasOne("sakeny.Entities.PostsTbl", "Post")
+                        .WithMany()
+                        .HasForeignKey("PostId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("sakeny.Entities.UsersTbl", "User")
+                        .WithMany("FavoritePosts")
+                        .HasForeignKey("UserId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("Post");
+
+                    b.Navigation("User");
+                });
+
             modelBuilder.Entity("sakeny.Entities.PostFeaturesTbl", b =>
                 {
                     b.HasOne("sakeny.Entities.FeaturesTbl", "Features")
@@ -512,6 +557,8 @@ namespace sakeny.Migrations
 
             modelBuilder.Entity("sakeny.Entities.UsersTbl", b =>
                 {
+                    b.Navigation("FavoritePosts");
+
                     b.Navigation("Notifications");
 
                     b.Navigation("PostFeedbackTbls");

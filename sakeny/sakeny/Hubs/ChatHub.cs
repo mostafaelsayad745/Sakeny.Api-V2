@@ -70,13 +70,14 @@ namespace sakeny.Hubs
             
         }
 
-        public async Task SendChatHistory(string user1, string user2)
+        public async Task SendChatHistory(string user1, string user2, string connectionId)
         {
             var chatHistory = await GetChatHistory(user1, user2);
             Console.WriteLine($"SendChatHistory called with {user1} and {user2}. Sending {chatHistory.Count()} messages.");
 
-            await Clients.All.SendAsync("ReceiveChatHistory", chatHistory);
+            await Clients.Client(connectionId).SendAsync("ReceiveChatHistory", chatHistory);
         }
+
 
 
         public async Task<IEnumerable<UserChatTbl>> GetChatHistory(string user1, string user2)

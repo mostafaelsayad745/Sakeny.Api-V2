@@ -29,7 +29,7 @@ namespace sakeny.Controllers
         }
 
         [HttpGet]
-        [Authorize]
+        //[Authorize]
         public async Task<ActionResult<UserForReturnDto>> GetUsers(string? name, string? SearchQuery,
             int pageNumber = 1, int pageSize = 10)
         {
@@ -47,7 +47,7 @@ namespace sakeny.Controllers
         }
 
         [HttpGet("{userId}", Name = "GetUser")]
-        [Authorize]
+        //[Authorize]
         public async Task<IActionResult> GetUser(int userId, bool includePostFeedbacks)
         {
             var userFromRepo = await _userInfoRepository.GetUserAsync(userId, includePostFeedbacks);
@@ -100,7 +100,7 @@ namespace sakeny.Controllers
         }
 
         [HttpPut("{userId}")]
-        [Authorize]
+       // [Authorize]
         public async Task<IActionResult> UpdateUser(int userId, UserForUpdateDto userForUpdateDto)
         {
             if (!await _userInfoRepository.UserExistsAsync(userId))
@@ -141,7 +141,7 @@ namespace sakeny.Controllers
         }
 
         [HttpPatch("{userId}")]
-        [Authorize]
+       // [Authorize]
         public async Task<IActionResult> PartialUpdateUser(int userId,
             JsonPatchDocument<UserForUpdateDto> patchDocument)
         {
@@ -223,7 +223,7 @@ namespace sakeny.Controllers
         }
 
         [HttpDelete("{userId}")]
-        [Authorize]
+       // [Authorize]
         public async Task<IActionResult> DeleteUser(int userId)
         {
             if (!await _userInfoRepository.UserExistsAsync(userId))

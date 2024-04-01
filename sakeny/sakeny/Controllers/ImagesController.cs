@@ -62,7 +62,7 @@ namespace sakeny.Controllers
 
         [HttpPost]
         public async Task<IActionResult> ImageUpload(int postId,
-            [FromForm(Name = "Data")] PicturesForCreationDto picturesForCreation)
+            [FromForm] PicturesForCreationDto picturesForCreation)
         {
             if (picturesForCreation == null || picturesForCreation.Images == null || picturesForCreation.Images.Count == 0)
             {

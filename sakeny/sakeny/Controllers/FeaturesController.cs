@@ -10,7 +10,7 @@ using sakeny.Services;
 namespace sakeny.Controllers
 {
     [Route("api/users/{userId}/posts/{postId}/features")]
-    [Authorize]
+    //[Authorize]
     [ApiController]
     public class FeaturesController : ControllerBase
     {

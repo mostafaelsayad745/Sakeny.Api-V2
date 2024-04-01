@@ -43,7 +43,7 @@ namespace sakeny.Migrations
                         .IsUnique()
                         .HasFilter("[FEATURES_NAME] IS NOT NULL");
 
-                    b.ToTable("FEATURES_TBL", (string)null);
+                    b.ToTable("FEATURES_TBL");
                 });
 
             modelBuilder.Entity("sakeny.Entities.NotificationTbl", b =>
@@ -72,7 +72,7 @@ namespace sakeny.Migrations
 
                     b.HasIndex("UserId");
 
-                    b.ToTable("Notifications", (string)null);
+                    b.ToTable("Notifications");
                 });
 
             modelBuilder.Entity("sakeny.Entities.PostFaviourateTbl", b =>
@@ -98,7 +98,7 @@ namespace sakeny.Migrations
 
                     b.HasIndex("UserId");
 
-                    b.ToTable("POST_FAV_TBL", (string)null);
+                    b.ToTable("POST_FAV_TBL");
                 });
 
             modelBuilder.Entity("sakeny.Entities.PostFeaturesTbl", b =>
@@ -118,7 +118,7 @@ namespace sakeny.Migrations
                     b.HasIndex(new[] { "FeaturesId", "PostId" }, "POST_FEATURES_INDEX")
                         .IsUnique();
 
-                    b.ToTable("POST_FEATURES_TBL", (string)null);
+                    b.ToTable("POST_FEATURES_TBL");
                 });
 
             modelBuilder.Entity("sakeny.Entities.PostFeedbackTbl", b =>
@@ -159,7 +159,7 @@ namespace sakeny.Migrations
                         .IsUnique()
                         .HasFilter("[USER_ID] IS NOT NULL AND [POST_ID] IS NOT NULL");
 
-                    b.ToTable("POST_FEEDBACK_TBL", (string)null);
+                    b.ToTable("POST_FEEDBACK_TBL");
                 });
 
             modelBuilder.Entity("sakeny.Entities.PostPicTbl", b =>
@@ -183,7 +183,7 @@ namespace sakeny.Migrations
 
                     b.HasIndex("PostId");
 
-                    b.ToTable("POST_PIC_TBL", (string)null);
+                    b.ToTable("POST_PIC_TBL");
                 });
 
             modelBuilder.Entity("sakeny.Entities.PostsTbl", b =>
@@ -290,7 +290,7 @@ namespace sakeny.Migrations
 
                     b.HasIndex("PostUserId");
 
-                    b.ToTable("POSTS_TBL", (string)null);
+                    b.ToTable("POSTS_TBL");
                 });
 
             modelBuilder.Entity("sakeny.Entities.UserBanTbl", b =>
@@ -309,7 +309,7 @@ namespace sakeny.Migrations
 
                     b.HasKey("UserBanId");
 
-                    b.ToTable("USER_BAN_TBL", (string)null);
+                    b.ToTable("USER_BAN_TBL");
                 });
 
             modelBuilder.Entity("sakeny.Entities.UserChatTbl", b =>
@@ -352,7 +352,7 @@ namespace sakeny.Migrations
 
                     b.HasKey("UserChatId");
 
-                    b.ToTable("USER_CHAT_TBL", (string)null);
+                    b.ToTable("USER_CHAT_TBL");
                 });
 
             modelBuilder.Entity("sakeny.Entities.UserFeedbackTbl", b =>
@@ -387,7 +387,7 @@ namespace sakeny.Migrations
                     b.HasKey("FeedbackId")
                         .HasName("PK_FEEDBACKS_TBL");
 
-                    b.ToTable("USER_FEEDBACK_TBL", (string)null);
+                    b.ToTable("USER_FEEDBACK_TBL");
                 });
 
             modelBuilder.Entity("sakeny.Entities.UsersTbl", b =>
@@ -454,7 +454,7 @@ namespace sakeny.Migrations
 
                     b.HasKey("UserId");
 
-                    b.ToTable("USERS_TBL", (string)null);
+                    b.ToTable("USERS_TBL");
                 });
 
             modelBuilder.Entity("sakeny.Entities.NotificationTbl", b =>

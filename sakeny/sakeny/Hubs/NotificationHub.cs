@@ -3,8 +3,14 @@ using Microsoft.AspNetCore.SignalR;
 
 public class NotificationHub : Hub
 {
-    public async Task SendNotification(string user, string message)
+    string conn = "";
+    public string GetConnectionId()
     {
-        await Clients.User(user).SendAsync("ReceiveNotification", message);
+        return conn;
+    }
+
+    public async Task SendNotification(string connectionId, string message)
+    {
+        await Clients.Client(connectionId).SendAsync("ReceiveNotification", message);
     }
 }

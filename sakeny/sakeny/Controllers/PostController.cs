@@ -180,10 +180,12 @@ namespace sakeny.Controllers
 
             var users = await _userInfoRepository.GetUsersWhoFavouriatePostAsync(postId);
 
+            var connectionId = _hubContext.Clients.All.SendAsync("GetConnectionId");
+
             foreach (var user in users)
             {
                 var message = $"The status of post {postId} has been changed to {postToPatch.PostStatue}";
-                await _hubContext.Clients.User(user.UserId.ToString()).SendAsync("ReceiveNotification", message);
+                await _hubContext.Clients.All.SendAsync("ReceiveNotification", message);
             }
 
             return NoContent();
