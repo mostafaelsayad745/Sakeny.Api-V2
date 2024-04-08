@@ -8,7 +8,7 @@ using sakeny.Services;
 namespace sakeny.Controllers
 {
     [Route("api/users/{userId}")]
-    //[Authorize]
+    [Authorize]
     [ApiController]
     public class PostFavouriateController : ControllerBase
     {

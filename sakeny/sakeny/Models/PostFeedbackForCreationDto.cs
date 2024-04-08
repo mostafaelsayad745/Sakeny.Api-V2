@@ -10,10 +10,10 @@ namespace sakeny.Models
         
        
 
-        public DateTime? PostFeedDate { get; set; }
+        //public DateTime? PostFeedDate { get; set; }
 
       
-        public TimeSpan? PostFeedTime { get; set; }
+        //public TimeSpan? PostFeedTime { get; set; }
 
        
         public string? PostFeedText { get; set; }

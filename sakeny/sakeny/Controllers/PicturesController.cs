@@ -12,7 +12,7 @@ using System.Text.Json;
 namespace sakeny.Controllers
 {
     [Route("api/posts/{postId}/pictures")]
-    //[Authorize]
+    [Authorize]
     [ApiController]
     public class PicutresController : ControllerBase
     {
@@ -68,7 +68,7 @@ namespace sakeny.Controllers
 
         [HttpPost]
         public async Task<IActionResult> PostPictures(int postId,
-            [FromForm(Name = "Data")] PicturesForCreationDto picturesForCreation)
+            [FromForm] PicturesForCreationDto picturesForCreation)
         {
             if (picturesForCreation == null || picturesForCreation.Images == null || picturesForCreation.Images.Count == 0)
             {

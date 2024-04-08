@@ -172,13 +172,13 @@ namespace sakeny.Migrations
                         column: x => x.POST_ID,
                         principalTable: "POSTS_TBL",
                         principalColumn: "POST_ID",
-                        onDelete: ReferentialAction.Cascade);
+                        onDelete: ReferentialAction.NoAction);
                     table.ForeignKey(
                         name: "FK_POST_FAV_TBL_USERS_TBL_USER_ID",
                         column: x => x.USER_ID,
                         principalTable: "USERS_TBL",
                         principalColumn: "USER_ID",
-                        onDelete: ReferentialAction.Cascade);
+                        onDelete: ReferentialAction.NoAction);
                 });
 
             migrationBuilder.CreateTable(

@@ -9,7 +9,7 @@ using System.Text.Json;
 namespace sakeny.Controllers
 {
     [Route("api/users/{userId}/chats")]
-    //[Authorize]
+    [Authorize]
     [ApiController]
     public class ChatController : ControllerBase
     {

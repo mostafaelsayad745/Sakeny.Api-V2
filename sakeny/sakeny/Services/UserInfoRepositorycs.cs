@@ -1,6 +1,7 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using sakeny.DbContexts;
 using sakeny.Entities;
+using sakeny.Models.PostDtos;
 using System.Linq;
 
 namespace sakeny.Services
@@ -23,6 +24,8 @@ namespace sakeny.Services
             if (post != null)
             {
                 postFeedbackTbl.Post = post;
+                postFeedbackTbl.PostFeedDate = DateTime.Now;
+                postFeedbackTbl.PostFeedTime = DateTime.Now.TimeOfDay;
                 postFeedbackTbl.User = await GetUserAsync(userId);
                 post.PostFeedbackTbls.Add(postFeedbackTbl);
             }
@@ -88,6 +91,11 @@ namespace sakeny.Services
         public void DeleteUserAsync(UsersTbl user)
         {
             _context.UsersTbls.Remove(user);
+        }
+
+        public async Task<UsersTbl?> GetUserAsync(int userId)
+        {
+            return await _context.UsersTbls.Where(u => u.UserId == userId).FirstOrDefaultAsync();
         }
 
         public async Task<UsersTbl?> GetUserAsync(int userId, bool includePostFeedbacks = false)
@@ -237,6 +245,115 @@ namespace sakeny.Services
             }
         }
 
+        public async Task<IEnumerable<PostsTbl>> SearchForPostAsync(PostForSerchDto postForSerchDto)
+        {
+
+            var query = _context.PostsTbls.AsQueryable();
+
+            if (!string.IsNullOrWhiteSpace(postForSerchDto.PostTitle))
+            {
+                query = query.Where(p => p.PostTitle.Contains(postForSerchDto.PostTitle));
+            }
+
+            if (!string.IsNullOrWhiteSpace(postForSerchDto.PostAddress))
+            {
+                query = query.Where(p => p.PostAddress.Contains(postForSerchDto.PostAddress));
+            }
+
+            if (postForSerchDto.MinPrice.HasValue)
+            {
+                query = query.Where(p => p.PostPriceDisplay >= postForSerchDto.MinPrice.Value);
+            }
+
+            if (postForSerchDto.MaxPrice.HasValue)
+            {
+                query = query.Where(p => p.PostPriceDisplay <= postForSerchDto.MaxPrice.Value);
+            }
+
+            if (postForSerchDto.MinArea.HasValue)
+            {
+                query = query.Where(p => p.PostArea >= postForSerchDto.MinArea.Value);
+            }
+
+            if (postForSerchDto.MaxArea.HasValue)
+            {
+                query = query.Where(p => p.PostArea <= postForSerchDto.MaxArea.Value);
+            }
+
+            if (postForSerchDto.MinRooms.HasValue)
+            {
+                query = query.Where(p => p.PostBedrooms >= postForSerchDto.MinRooms.Value);
+            }
+
+            if (postForSerchDto.MaxRooms.HasValue)
+            {
+                query = query.Where(p => p.PostBedrooms <= postForSerchDto.MaxRooms.Value);
+            }
+
+            if (postForSerchDto.MinBathrooms.HasValue)
+            {
+                query = query.Where(p => p.PostBathrooms >= postForSerchDto.MinBathrooms.Value);
+            }
+
+            if (postForSerchDto.MaxBathrooms.HasValue)
+            {
+                query = query.Where(p => p.PostBathrooms <= postForSerchDto.MaxBathrooms.Value);
+            }
+
+            //if (postForSerchDto.MinGarages.HasValue)
+            //{
+            //    query = query.Where(p => p.PostGarages >= postForSerchDto.MinGarages.Value);
+            //}
+
+            //if (postForSerchDto.MaxGarages.HasValue)
+            //{
+            //    query = query.Where(p => p.PostGarages <= postForSerchDto.MaxGarages.Value);
+            //}
+
+            if (postForSerchDto.MinFloors.HasValue)
+            {
+                query = query.Where(p => p.PostFloor >= postForSerchDto.MinFloors.Value);
+            }
+
+            if (postForSerchDto.MaxFloors.HasValue)
+            {
+                query = query.Where(p => p.PostFloor <= postForSerchDto.MaxFloors.Value);
+            }
+
+            if (postForSerchDto.PostLookSea.HasValue)
+            {
+                query = query.Where(p => p.PostLookSea == postForSerchDto.PostLookSea.Value);
+            }
+
+            if (postForSerchDto.PostPetsAllow.HasValue)
+            {
+                query = query.Where(p => p.PostPetsAllow == postForSerchDto.PostPetsAllow.Value);
+            }
+
+            //if (postForSerchDto.MinYearBuilt.HasValue)
+            //{
+            //    query = query.Where(p => p.PostYearBuilt >= postForSerchDto.MinYearBuilt.Value);
+            //}
+
+            //if (postForSerchDto.MaxYearBuilt.HasValue)
+            //{
+            //    query = query.Where(p => p.PostYearBuilt <= postForSerchDto.MaxYearBuilt.Value);
+            //}
+
+            //if (postForSerchDto.MinRating.HasValue)
+            //{
+            //    query = query.Where(p => p.PostRating >= postForSerchDto.MinRating.Value);
+            //}
+
+            //if (postForSerchDto.MaxRating.HasValue)
+            //{
+            //    query = query.Where(p => p.PostRating <= postForSerchDto.MaxRating.Value);
+            //}
+
+            return await query.ToListAsync();
+        }
+
+
 
         public async Task AddPostForUserAsync(int userId, PostsTbl postTbl)
         {
@@ -253,6 +370,10 @@ namespace sakeny.Services
             _context.PostsTbls.Remove(postTbl);
         }
 
+        public async Task<IEnumerable<PostsTbl>> GetAllPostsAsync()
+        {
+            return await _context.PostsTbls.ToListAsync();
+        }
 
         // defination for the features of the post
 
@@ -341,6 +462,14 @@ namespace sakeny.Services
         {
             return await _context.Notifications.Where(n => n.UserId == userId && n.NotificationId == notificationId)
                 .FirstOrDefaultAsync();
+        }
+
+        public async Task AddNotificationForUserAsync( NotificationTbl notificationTbl)
+        {
+            
+            
+                await _context.Notifications.AddAsync(notificationTbl);
+            
         }
 
         public async Task AddNotificationForUserAsync(int userId, NotificationTbl notificationTbl)
@@ -518,10 +647,6 @@ namespace sakeny.Services
             return await _context.UserBanTbls.Where(u => u.UserBanNatId == userNatId).FirstOrDefaultAsync();
         }
 
-
-
-
-
-
+       
     }
 }

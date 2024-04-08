@@ -10,7 +10,7 @@ using System.Text.Json;
 namespace sakeny.Controllers
 {
     [Route("api")]
-    //[Authorize]
+    [Authorize]
     [ApiController]
     public class UserFeedbackController : ControllerBase
     {

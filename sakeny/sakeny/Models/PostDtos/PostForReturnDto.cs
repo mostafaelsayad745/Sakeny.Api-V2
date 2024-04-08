@@ -1,10 +1,13 @@
 ﻿using sakeny.Entities;
+using sakeny.Models.PicturesDtos;
 using System.ComponentModel.DataAnnotations.Schema;
 
 namespace sakeny.Models.PostDtos
 {
     public class PostForReturnDto
     {
+        public int PostId { get; set; }
+
         public DateTime? PostDate { get; set; }
 
         public TimeSpan? PostTime { get; set; }
@@ -49,8 +52,13 @@ namespace sakeny.Models.PostDtos
 
         public bool? PostStatue { get; set; } // unavailable
 
+        public decimal PostUserId { get; set; }
 
-        [InverseProperty("Post")]
+        public List<PicturesForReturnDto> PostPics { get; set; } = new List<PicturesForReturnDto>();
+
+
+
+        //[InverseProperty("Post")]
         public virtual ICollection<PostPicTbl> PostPicTbls { get; set; } = new List<PostPicTbl>();
 
     }

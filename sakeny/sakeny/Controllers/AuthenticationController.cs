@@ -21,16 +21,15 @@ namespace sakeny.Controllers
         public class AuthenticationRequestBody
         {
 
-            public string? UserName { get; set; }
+            //public string? UserName { get; set; }
             public string? UserMail { get; set; }
             public string? Password { get; set; }
         }
 
-        [HttpPost("authenticate")]
+        [HttpPost("login")]
         public ActionResult<string> Authenticate(AuthenticationRequestBody authenticationRequestBody)
         {
-            var user = validateUserCredentials
-                (authenticationRequestBody.UserName, authenticationRequestBody.Password , authenticationRequestBody.UserMail);
+            var user = validateUserCredentials(authenticationRequestBody.Password, authenticationRequestBody.UserMail);
 
             if (user == null)
             {
@@ -44,9 +43,8 @@ namespace sakeny.Controllers
 
             var claimsForToken = new List<Claim>();
             claimsForToken.Add(new Claim("sub", user.Id.ToString()));
-            claimsForToken.Add(new Claim("user_name", user.UserName));
+            //claimsForToken.Add(new Claim("user_name", user.UserName));
             claimsForToken.Add(new Claim("user_email", user.UserEmail));
-          
 
             var jwtSecurityToken = new JwtSecurityToken(
                 _configuration["Authentication:Issuer"],
@@ -59,33 +57,34 @@ namespace sakeny.Controllers
             var tokenToReturn = new JwtSecurityTokenHandler()
                .WriteToken(jwtSecurityToken);
 
-            return Ok(tokenToReturn);
+            Response.Headers.Add("UserId", user.Id.ToString());
 
+            return Ok(tokenToReturn);
         }
 
-        private UserInfo validateUserCredentials(string? userName, string? password , string? userMail)
+        private UserInfo validateUserCredentials( string? password , string? userMail)
         {
             HOUSE_RENT_DBContext context = new HOUSE_RENT_DBContext();
-            var user = context.UsersTbls.FirstOrDefault(u => u.UserName == userName && u.UserEmail == userMail && u.UserPassword == password);
+            var user = context.UsersTbls.FirstOrDefault(u =>  u.UserEmail == userMail && u.UserPassword == password);
             if (user == null)
             {
                 return null;
             }
-            return new UserInfo(user.UserId, user.UserName, user.UserEmail);
+            return new UserInfo(user.UserId,  user.UserEmail);
         }
 
         private class UserInfo
         {
-            public UserInfo(decimal id, string userName, string userEmail)
+            public UserInfo(decimal id, string userEmail)
             {
                 Id = id;
-                UserName = userName;
+                //UserName = userName;
                 UserEmail = userEmail;
                
             }
 
             public decimal Id { get; set; }
-            public string UserName { get; set; }
+           // public string UserName { get; set; }
             public string UserEmail { get; set; }
             
 

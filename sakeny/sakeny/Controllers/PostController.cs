@@ -11,8 +11,8 @@ using System.Text.Json;
 
 namespace sakeny.Controllers
 {
-    [Route("api/users/{userId}/posts")]
-    //[Authorize]
+    [Route("api")]
+     //[Authorize]
     [ApiController]
     public class PostController : ControllerBase
     {
@@ -31,9 +31,22 @@ namespace sakeny.Controllers
 
         }
 
-
-
         [HttpGet]
+        [Route("allposts")]
+        public async Task<IActionResult> GetAllPosts ()
+        {
+            var posts = await _userInfoRepository.GetAllPostsAsync();
+            return Ok(_mapper.Map<IEnumerable<PostForReturnDto>>(posts));
+        }
+
+        [HttpGet("SearchForpost")]
+        public async Task<IActionResult> SearchPost (PostForSerchDto postForSerchDto)
+        {
+            var posts = await _userInfoRepository.SearchForPostAsync(postForSerchDto);
+            return Ok(_mapper.Map<IEnumerable<PostForReturnDto>>(posts));
+        }
+
+        [HttpGet("users/{userId}/posts")]
         public async Task<IActionResult> GetPosts(int userId ,
             string? name , string? SearchQuery, int pageNumber = 1 , int pageSize = 10)
         {
@@ -54,7 +67,7 @@ namespace sakeny.Controllers
             return Ok(_mapper.Map<IEnumerable<PostForReturnDto>>(postsForUser));
         }
 
-        [HttpGet("{postId}", Name = "GetPost")]
+        [HttpGet("users/{userId}/posts/{postId}", Name = "GetPost")]
         public async Task<IActionResult> GetPost(int userId, int postId )
         {
             if (!await _userInfoRepository.UserExistsAsync(userId))
@@ -72,7 +85,7 @@ namespace sakeny.Controllers
             return Ok(_mapper.Map<PostForReturnDto>(postForUser));
         }
 
-        [HttpPost]
+        [HttpPost("users/{userId}/posts")]
         public async Task<IActionResult> AddPost(int userId, PostForCreationDto postForCreationDto)
         {
             if (!await _userInfoRepository.UserExistsAsync(userId))
@@ -90,7 +103,7 @@ namespace sakeny.Controllers
                                new { userId, postId = postEntity.PostId },
                                               postToReturn);
         }
-        [HttpPut("{postId}")]
+        [HttpPut("users/{userId}/posts/{postId}")]
         public async Task<IActionResult> UpdatePost (int userId , int postId , PostForUpdateDto postForUpdateDto)
         {
             if(! await _userInfoRepository.UserExistsAsync(userId))
@@ -112,7 +125,7 @@ namespace sakeny.Controllers
             return NoContent();
 
         }
-        [HttpPatch("{postId}")]
+        [HttpPatch("users/{userId}/posts/{postId}")]
         public async Task<IActionResult> PartialUpdatePost(int userId, int postId, JsonPatchDocument<PostForUpdateDto> patchDocument)
         {
             if (!await _userInfoRepository.UserExistsAsync(userId))
@@ -148,7 +161,7 @@ namespace sakeny.Controllers
 
 
 
-        [HttpPatch("{postId}/statues")]
+        [HttpPatch("users/{userId}/posts/{postId}/statues")]
         public async Task<IActionResult> PartialUpdatePostForStatues(int userId, int postId,JsonPatchDocument< PostForUpdateDto> patchDocument)
         {
             if (!await _userInfoRepository.UserExistsAsync(userId))
@@ -180,12 +193,30 @@ namespace sakeny.Controllers
 
             var users = await _userInfoRepository.GetUsersWhoFavouriatePostAsync(postId);
 
-            var connectionId = _hubContext.Clients.All.SendAsync("GetConnectionId");
+            // var connectionId = _hubContext.Clients.All.SendAsync("GetConnectionId");
+            var message = "";
+           
+            if(postToPatch.PostStatue == true)
+            {
+                message = $"The post {postEntity.PostTitle} is avaiable for rent";
+            }
+            else
+            {
+                message = $"The post {postEntity.PostTitle} is no longer avaiable";
+            }
 
             foreach (var user in users)
             {
-                var message = $"The status of post {postId} has been changed to {postToPatch.PostStatue}";
-                await _hubContext.Clients.All.SendAsync("ReceiveNotification", message);
+                var notificationEntity = new NotificationTbl
+                {
+                    Message = message,
+                    Timestamp = DateTime.Now,
+                    User = user,
+                    UserId = user.UserId
+                };
+                await _userInfoRepository.AddNotificationForUserAsync( notificationEntity);
+                await _userInfoRepository.SaveChangesAsync();
+               // await _hubContext.Clients.All.SendAsync("ReceiveNotification", message);
             }
 
             return NoContent();
@@ -194,7 +225,7 @@ namespace sakeny.Controllers
 
        
 
-        [HttpDelete("{postId}")]
+        [HttpDelete("users/{userId}/posts/{postId}")]
         public async Task<IActionResult> DeletePost(int userId, int postId)
         {
             if (!await _userInfoRepository.UserExistsAsync(userId))

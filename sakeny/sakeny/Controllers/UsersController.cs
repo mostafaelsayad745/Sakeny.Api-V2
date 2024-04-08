@@ -3,6 +3,8 @@ using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.JsonPatch;
 using Microsoft.AspNetCore.Mvc;
+using MimeKit;
+using MailKit.Net.Smtp;
 using sakeny.DbContexts;
 using sakeny.Entities;
 using sakeny.Models;
@@ -29,7 +31,7 @@ namespace sakeny.Controllers
         }
 
         [HttpGet]
-        //[Authorize]
+        [Authorize]
         public async Task<ActionResult<UserForReturnDto>> GetUsers(string? name, string? SearchQuery,
             int pageNumber = 1, int pageSize = 10)
         {
@@ -47,10 +49,10 @@ namespace sakeny.Controllers
         }
 
         [HttpGet("{userId}", Name = "GetUser")]
-        //[Authorize]
-        public async Task<IActionResult> GetUser(int userId, bool includePostFeedbacks)
+        [Authorize]
+        public async Task<IActionResult> GetUser(int userId)
         {
-            var userFromRepo = await _userInfoRepository.GetUserAsync(userId, includePostFeedbacks);
+            var userFromRepo = await _userInfoRepository.GetUserAsync(userId);
             if (userFromRepo == null)
             {
                 return NotFound();
@@ -73,11 +75,32 @@ namespace sakeny.Controllers
             {
                 return BadRequest("this email is already used");
             }
+            else
+            {
+                var verificationCode = new Random().Next(100000, 999999).ToString();
+
+                // Send the verification code to the user's email
+                var emailMessage = new MimeMessage();
+                emailMessage.From.Add(new MailboxAddress("Your Name", "your-email@example.com"));
+                emailMessage.To.Add(new MailboxAddress("", postUserEntity.UserEmail));
+                emailMessage.Subject = "Verification Code";
+                emailMessage.Body = new TextPart("plain") { Text = $"Your verification code is {verificationCode}" };
+
+                using (var client = new SmtpClient())
+                {
+                    await client.ConnectAsync("sandbox.smtp.mailtrap.io", 2525, false);
+                    await client.AuthenticateAsync("aa06c94b9d5589", "017d5983e41cb6");
+                    await client.SendAsync(emailMessage);
+                    await client.DisconnectAsync(true);
+                }
+            }
+
 
             await _userInfoRepository.AddUserAsync(postUserEntity);
             await _userInfoRepository.SaveChangesAsync();
             var postUserToReturn = _mapper.Map<UserForReturnDto>(postUserEntity);
-            return CreatedAtRoute("GetUser", new { id = postUserToReturn.UserId }, postUserToReturn);
+
+            return CreatedAtRoute("GetUser", new { userId = postUserToReturn.UserId }, postUserToReturn);
 
             //var db = new HOUSE_RENT_DBContext();
             //var maxUserId = db.UsersTbls.Max(u => u.UserId);
@@ -99,11 +122,11 @@ namespace sakeny.Controllers
             //return CreatedAtRoute("GetUser", new { id = userToCreate.UserId }, userToCreate);
         }
 
-        [HttpPut("{userId}")]
-       // [Authorize]
-        public async Task<IActionResult> UpdateUser(int userId, UserForUpdateDto userForUpdateDto)
+        [HttpPut]
+       [Authorize]
+        public async Task<IActionResult> UpdateUser( UserForUpdateDto userForUpdateDto)
         {
-            if (!await _userInfoRepository.UserExistsAsync(userId))
+            if (!await _userInfoRepository.UserExistsAsync((int)userForUpdateDto.UserId))
             {
                 return NotFound();
             }
@@ -113,7 +136,7 @@ namespace sakeny.Controllers
                 return BadRequest("you must give me the user information");
             }
 
-            var userEntity = await _userInfoRepository.GetUserAsync(userId, false);
+            var userEntity = await _userInfoRepository.GetUserAsync((int)userForUpdateDto.UserId, false);
             _mapper.Map(userForUpdateDto, userEntity);
             await _userInfoRepository.SaveChangesAsync();
             return NoContent();
@@ -141,7 +164,7 @@ namespace sakeny.Controllers
         }
 
         [HttpPatch("{userId}")]
-       // [Authorize]
+       [Authorize]
         public async Task<IActionResult> PartialUpdateUser(int userId,
             JsonPatchDocument<UserForUpdateDto> patchDocument)
         {
@@ -223,7 +246,7 @@ namespace sakeny.Controllers
         }
 
         [HttpDelete("{userId}")]
-       // [Authorize]
+        [Authorize]
         public async Task<IActionResult> DeleteUser(int userId)
         {
             if (!await _userInfoRepository.UserExistsAsync(userId))

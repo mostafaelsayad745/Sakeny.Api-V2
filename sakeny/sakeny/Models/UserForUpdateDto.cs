@@ -4,6 +4,7 @@ namespace sakeny.Models
 {
     public class UserForUpdateDto
     {
+        public decimal UserId { get; set; }
         [Required(ErrorMessage = "User Name is required")]
         [MaxLength(50)]
         public string UserName { get; set; } = string.Empty;

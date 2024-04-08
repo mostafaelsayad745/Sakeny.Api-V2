@@ -1,4 +1,5 @@
 ﻿using sakeny.Entities;
+using sakeny.Models.PostDtos;
 
 namespace sakeny.Services
 {
@@ -14,6 +15,7 @@ namespace sakeny.Services
         Task<UsersTbl?> GetUserAsync(string userName);
 
         Task<UsersTbl?> GetUserAsync(int userId, bool includePostFeedbacks);
+        Task<UsersTbl?> GetUserAsync(int userId);
 
         Task AddUserAsync(UsersTbl user);
         Task UpdateUserAsync(UsersTbl user);
@@ -44,6 +46,8 @@ namespace sakeny.Services
         Task<PostsTbl?> GetPostForUserAsyncForUpdate(int userId, int postId);
         Task AddPostForUserAsync(int userId, PostsTbl postTbl);
         void DeletePost(PostsTbl postTbl);
+        Task<IEnumerable<PostsTbl>> GetAllPostsAsync();
+        Task<IEnumerable<PostsTbl>> SearchForPostAsync(PostForSerchDto postForSerchDto);
 
 
 
@@ -69,6 +73,7 @@ namespace sakeny.Services
         Task<IEnumerable<NotificationTbl>> GetNotificationsForUserAsync(int userId);
         Task<NotificationTbl> GetNotificationForUserAsync(int userId, int notificationId);
         Task AddNotificationForUserAsync(int userId, NotificationTbl notificationTbl);
+        Task AddNotificationForUserAsync(NotificationTbl notificationTbl);
         void DeleteNotification(NotificationTbl notificationTbl);
 
         // defination for the chat of the user

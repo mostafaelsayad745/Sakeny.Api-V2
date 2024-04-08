@@ -52,9 +52,9 @@ namespace sakeny
                    {
                        options.TokenValidationParameters = new()
                        {
-                           ValidateIssuer = true,
-                           ValidateAudience = true,
-                           ValidateIssuerSigningKey = true,
+                           ValidateIssuer = false,
+                           ValidateAudience = false,
+                           ValidateIssuerSigningKey = false,
                            ValidIssuer = builder.Configuration["Authentication:Issuer"],
                            ValidAudience = builder.Configuration["Authentication:Audience"],
                            IssuerSigningKey = new SymmetricSecurityKey(
@@ -87,8 +87,8 @@ namespace sakeny
             {
                 options.AddPolicy("AllowAll", builder =>
                 {
-                    builder.WithOrigins("http://localhost:3000")
-                    .AllowAnyMethod().AllowAnyHeader().AllowCredentials();
+                    builder.AllowAnyOrigin()
+                    .AllowAnyMethod().AllowAnyHeader();
                 });
             });
 
