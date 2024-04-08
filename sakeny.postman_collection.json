@@ -21,7 +21,7 @@
 									"bearer": [
 										{
 											"key": "token",
-											"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiIyIiwidXNlcl9uYW1lIjoiYWJkZWxyYWhtYW5fbWFuc291ciIsInVzZXJfZW1haWwiOiJhYmRlbHJhaG1hbm1hbnNvdXJAZ21haWwuY29tIiwibmJmIjoxNzEwMzI2ODMzLCJleHAiOjE3MTAzMzA0MzMsImlzcyI6Imh0dHBzOi8vbG9jYWxob3N0OjcwODAiLCJhdWQiOiJTYWtlbnkuYXBpIn0.K_GuxsZcIpSjDMgmQ4Quosm8PWB_YJARTwS6JN0x_hM",
+											"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiIyIiwidXNlcl9lbWFpbCI6ImFiZGVscmFobWFubWFuc291ckBnbWFpbC5jb20iLCJuYmYiOjE3MTI0OTMwMDAsImV4cCI6MTcxMjQ5NjYwMCwiaXNzIjoiaHR0cHM6Ly9sb2NhbGhvc3Q6NzA4MCIsImF1ZCI6IlNha2VueS5hcGkifQ.XpkAX3MpeoQ6j7W0qhMztsg9pal0lvvNmUNjWzNoLeM",
 											"type": "string"
 										}
 									]
@@ -46,10 +46,20 @@
 						{
 							"name": "GET User",
 							"request": {
+								"auth": {
+									"type": "bearer",
+									"bearer": [
+										{
+											"key": "token",
+											"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiIyIiwidXNlcl9uYW1lIjoiYWJkZWxyYWhtYW5fbWFuc291ciIsInVzZXJfZW1haWwiOiJhYmRlbHJhaG1hbm1hbnNvdXJAZ21haWwuY29tIiwibmJmIjoxNzEyMjQwNDA0LCJleHAiOjE3MTIyNDQwMDQsImlzcyI6Imh0dHA6Ly9zYWtlbnlhcGkucnVuYXNwLm5ldCIsImF1ZCI6IlNha2VueS5hcGkifQ.OPYUEIlaklrXGsphRjglM9SiGXhhUPTJy8XZi2SY1VA",
+											"type": "string"
+										}
+									]
+								},
 								"method": "GET",
 								"header": [],
 								"url": {
-									"raw": "https://localhost:{{portNumber}}/api/users/3",
+									"raw": "https://localhost:{{portNumber}}/api/users/2",
 									"protocol": "https",
 									"host": [
 										"localhost"
@@ -58,7 +68,7 @@
 									"path": [
 										"api",
 										"users",
-										"3"
+										"2"
 									]
 								}
 							},
@@ -94,71 +104,23 @@
 							"response": []
 						},
 						{
-							"name": "POST User (missing all properties)",
-							"request": {
-								"method": "POST",
-								"header": [],
-								"body": {
-									"mode": "raw",
-									"raw": "{\r\n    \r\n}",
-									"options": {
-										"raw": {
-											"language": "json"
-										}
-									}
-								},
-								"url": {
-									"raw": "https://localhost:{{portNumber}}/api/users",
-									"protocol": "https",
-									"host": [
-										"localhost"
-									],
-									"port": "{{portNumber}}",
-									"path": [
-										"api",
-										"users"
-									]
-								}
-							},
-							"response": []
-						},
-						{
-							"name": "POST User (missing some properties)",
-							"request": {
-								"method": "POST",
-								"header": [],
-								"body": {
-									"mode": "raw",
-									"raw": "{\r\n    \"userName\": \"amir.ahmed\",\r\n    \"userPassword\": \"user3_password\",\r\n    \"userFullName\": \"amir ahmed mohamed\",\r\n    \"userEmail\": \"amir@example.com\",\r\n    \"userNatId\": \"98765432109877\"\r\n}",
-									"options": {
-										"raw": {
-											"language": "json"
-										}
-									}
-								},
-								"url": {
-									"raw": "https://localhost:{{portNumber}}/api/users",
-									"protocol": "https",
-									"host": [
-										"localhost"
-									],
-									"port": "{{portNumber}}",
-									"path": [
-										"api",
-										"users"
-									]
-								}
-							},
-							"response": []
-						},
-						{
 							"name": "PUT User",
 							"request": {
+								"auth": {
+									"type": "bearer",
+									"bearer": [
+										{
+											"key": "token",
+											"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiIyIiwidXNlcl9lbWFpbCI6ImFiZGVscmFobWFubWFuc291ckBnbWFpbC5jb20iLCJuYmYiOjE3MTIzOTUyMjQsImV4cCI6MTcxMjM5ODgyNCwiaXNzIjoiaHR0cHM6Ly9sb2NhbGhvc3Q6NzA4MCIsImF1ZCI6IlNha2VueS5hcGkifQ.Qu1fK1HsJAdomsqkkxl-_7VJx8CezCDtAK9QS3RaJOg",
+											"type": "string"
+										}
+									]
+								},
 								"method": "PUT",
 								"header": [],
 								"body": {
 									"mode": "raw",
-									"raw": "{\r\n    \"userId\": 2,\r\n    \"userName\": \"abdelrahman_mansour\",\r\n    \"userPassword\": \"123456789\",\r\n    \"userFullName\": \"عبدالرحمن منصور حامد\",\r\n    \"userEmail\": \"abdelrahmanmansour@gmail.com\",\r\n    \"userNatId\": \"30205301211458\",\r\n    \"userGender\": \"male\",\r\n    \"userAge\": 20,\r\n    \"userInfo\": \"Flutter Dev\",\r\n    \"userAddress\": \"المنصورة - طلخا -السوق التحتاني\",\r\n    \"userAccountType\": \"مستأجر\",\r\n    \"postFeedbackTbls\": []\r\n}",
+									"raw": "{\r\n    \"userId\": 2,\r\n    \"userName\": \"abdelrahman_mansour\",\r\n    \"userPassword\": \"123456789\",\r\n    \"userFullName\": \"عبدالرحمن منصور حامد\",\r\n    \"userEmail\": \"abdelrahmanmansour@gmail.com\",\r\n    \"userNatId\": \"30205301211458\",\r\n    \"userGender\": \"male\",\r\n    \"userAge\": 23,\r\n    \"userInfo\": \"Flutter Dev\",\r\n    \"userAddress\": \"المنصورة - طلخا -السوق التحتاني\",\r\n    \"userAccountType\": \"مستأجر\",\r\n    \"postFeedbackTbls\": []\r\n}",
 									"options": {
 										"raw": {
 											"language": "json"
@@ -166,7 +128,7 @@
 									}
 								},
 								"url": {
-									"raw": "https://localhost:{{portNumber}}/api/users/2",
+									"raw": "https://localhost:{{portNumber}}/api/users",
 									"protocol": "https",
 									"host": [
 										"localhost"
@@ -174,8 +136,7 @@
 									"port": "{{portNumber}}",
 									"path": [
 										"api",
-										"users",
-										"2"
+										"users"
 									]
 								}
 							},
@@ -274,10 +235,20 @@
 						{
 							"name": "DELETE User",
 							"request": {
+								"auth": {
+									"type": "bearer",
+									"bearer": [
+										{
+											"key": "token",
+											"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiIyIiwidXNlcl9uYW1lIjoiYWJkZWxyYWhtYW5fbWFuc291ciIsInVzZXJfZW1haWwiOiJhYmRlbHJhaG1hbm1hbnNvdXJAZ21haWwuY29tIiwibmJmIjoxNzEwMzU3NjI2LCJleHAiOjE3MTAzNjEyMjYsImlzcyI6Imh0dHBzOi8vbG9jYWxob3N0OjcwODAiLCJhdWQiOiJTYWtlbnkuYXBpIn0.EhpT6Acy4mt9oBZES8PJ9CBwL1f5y1pW6Kt5wWaL1mk",
+											"type": "string"
+										}
+									]
+								},
 								"method": "DELETE",
 								"header": [],
 								"url": {
-									"raw": "https://localhost:{{portNumber}}/api/users/4",
+									"raw": "https://localhost:{{portNumber}}/api/users/16",
 									"protocol": "https",
 									"host": [
 										"localhost"
@@ -286,7 +257,7 @@
 									"path": [
 										"api",
 										"users",
-										"4"
+										"16"
 									]
 								}
 							},
@@ -300,6 +271,16 @@
 						{
 							"name": "GET Posts (For specific User which its Statue is true)",
 							"request": {
+								"auth": {
+									"type": "bearer",
+									"bearer": [
+										{
+											"key": "token",
+											"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiIyIiwidXNlcl9lbWFpbCI6ImFiZGVscmFobWFubWFuc291ckBnbWFpbC5jb20iLCJuYmYiOjE3MTIzNzE2OTQsImV4cCI6MTcxMjM3NTI5NCwiaXNzIjoiaHR0cHM6Ly9sb2NhbGhvc3Q6NzA4MCIsImF1ZCI6IlNha2VueS5hcGkifQ.c_hc71RbVHrrY_7qRekRiu9j0T2NEPt8mKa4wnL4eHw",
+											"type": "string"
+										}
+									]
+								},
 								"method": "GET",
 								"header": [],
 								"url": {
@@ -325,6 +306,16 @@
 								"disableBodyPruning": true
 							},
 							"request": {
+								"auth": {
+									"type": "bearer",
+									"bearer": [
+										{
+											"key": "token",
+											"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiIyIiwidXNlcl9lbWFpbCI6ImFiZGVscmFobWFubWFuc291ckBnbWFpbC5jb20iLCJuYmYiOjE3MTIzNzE2OTQsImV4cCI6MTcxMjM3NTI5NCwiaXNzIjoiaHR0cHM6Ly9sb2NhbGhvc3Q6NzA4MCIsImF1ZCI6IlNha2VueS5hcGkifQ.c_hc71RbVHrrY_7qRekRiu9j0T2NEPt8mKa4wnL4eHw",
+											"type": "string"
+										}
+									]
+								},
 								"method": "GET",
 								"header": [],
 								"body": {
@@ -337,7 +328,7 @@
 									}
 								},
 								"url": {
-									"raw": "https://localhost:{{portNumber}}/api/users/2/posts/2",
+									"raw": "https://localhost:{{portNumber}}/api/users/2/posts/5",
 									"protocol": "https",
 									"host": [
 										"localhost"
@@ -348,7 +339,7 @@
 										"users",
 										"2",
 										"posts",
-										"2"
+										"5"
 									]
 								}
 							},
@@ -357,11 +348,21 @@
 						{
 							"name": "POST Post (For specific user)",
 							"request": {
+								"auth": {
+									"type": "bearer",
+									"bearer": [
+										{
+											"key": "token",
+											"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiIyIiwidXNlcl9lbWFpbCI6ImFiZGVscmFobWFubWFuc291ckBnbWFpbC5jb20iLCJuYmYiOjE3MTIzNzE2OTQsImV4cCI6MTcxMjM3NTI5NCwiaXNzIjoiaHR0cHM6Ly9sb2NhbGhvc3Q6NzA4MCIsImF1ZCI6IlNha2VueS5hcGkifQ.c_hc71RbVHrrY_7qRekRiu9j0T2NEPt8mKa4wnL4eHw",
+											"type": "string"
+										}
+									]
+								},
 								"method": "POST",
 								"header": [],
 								"body": {
 									"mode": "raw",
-									"raw": "{\r\n    \"PostDate\": \"2024-02-08T12:30:00Z\",\r\n    \"PostTime\": \"05:30:00\",\r\n    \"PostCategory\": \"Real Estate\",\r\n    \"PostTitle\": \"wow House for Sale\",\r\n    \"PostBody\": \"Lorem ipsum dolor sit amet, consectetur adipiscing elit.\",\r\n    \"PostArea\": 200.5,\r\n    \"PostKitchens\": 2,\r\n    \"PostBedrooms\": 3,\r\n    \"PostBathrooms\": 2,\r\n    \"PostLookSea\": true,\r\n    \"PostPetsAllow\": false,\r\n    \"PostCurrency\": \"USD\",\r\n    \"PostPriceAi\": 250000.00,\r\n    \"PostPriceDisplay\": 265000.00,\r\n    \"PostPriceType\": \"Negotiable\",\r\n    \"PostAddress\": \"123 Main Street\",\r\n    \"PostCity\": \"france City\",\r\n    \"PostState\": \"cairo State\",\r\n    \"PostFloor\": 2,\r\n    \"PostLatitude\": \"40.7128\",\r\n    \"PostLongitude\": \"-74.0060\",\r\n    \"PostStatue\": false,\r\n    \"PostPicTbls\": [\r\n      \r\n      \r\n    ]\r\n  }",
+									"raw": "{\r\n    \"PostDate\": \"2024-02-08T12:30:00Z\",\r\n    \"PostTime\": \"05:30:00\",\r\n    \"PostCategory\": \"Real Estate\",\r\n    \"PostTitle\": \"wow House for Sale\",\r\n    \"PostBody\": \"Lorem ipsum dolor sit amet, consectetur adipiscing elit.\",\r\n    \"PostArea\": 200.5,\r\n    \"PostKitchens\": 2,\r\n    \"PostBedrooms\": 3,\r\n    \"PostBathrooms\": 2,\r\n    \"PostLookSea\": true,\r\n    \"PostPetsAllow\": false,\r\n    \"PostCurrency\": \"USD\",\r\n    \"PostPriceAi\": 250000.00,\r\n    \"PostPriceDisplay\": 265000.00,\r\n    \"PostPriceType\": \"Negotiable\",\r\n    \"PostAddress\": \"123 Main Street\",\r\n    \"PostCity\": \"england City\",\r\n    \"PostState\": \"cairo State\",\r\n    \"PostFloor\": 2,\r\n    \"PostLatitude\": \"40.7128\",\r\n    \"PostLongitude\": \"-74.0060\",\r\n    \"PostStatue\": true,\r\n    \"PostPicTbls\": [\r\n      \r\n      \r\n    ]\r\n  }",
 									"options": {
 										"raw": {
 											"language": "json"
@@ -369,7 +370,7 @@
 									}
 								},
 								"url": {
-									"raw": "https://localhost:{{portNumber}}/api/users/2/posts",
+									"raw": "https://localhost:{{portNumber}}/api/users/3/posts",
 									"protocol": "https",
 									"host": [
 										"localhost"
@@ -378,7 +379,7 @@
 									"path": [
 										"api",
 										"users",
-										"2",
+										"3",
 										"posts"
 									]
 								}
@@ -388,6 +389,16 @@
 						{
 							"name": "PUT Post (for specific User)",
 							"request": {
+								"auth": {
+									"type": "bearer",
+									"bearer": [
+										{
+											"key": "token",
+											"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiIyIiwidXNlcl9lbWFpbCI6ImFiZGVscmFobWFubWFuc291ckBnbWFpbC5jb20iLCJuYmYiOjE3MTIzNzE2OTQsImV4cCI6MTcxMjM3NTI5NCwiaXNzIjoiaHR0cHM6Ly9sb2NhbGhvc3Q6NzA4MCIsImF1ZCI6IlNha2VueS5hcGkifQ.c_hc71RbVHrrY_7qRekRiu9j0T2NEPt8mKa4wnL4eHw",
+											"type": "string"
+										}
+									]
+								},
 								"method": "PUT",
 								"header": [],
 								"body": {
@@ -420,6 +431,16 @@
 						{
 							"name": "PATCH Post ( Update one property (PostStatue) in post )",
 							"request": {
+								"auth": {
+									"type": "bearer",
+									"bearer": [
+										{
+											"key": "token",
+											"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiIyIiwidXNlcl9lbWFpbCI6ImFiZGVscmFobWFubWFuc291ckBnbWFpbC5jb20iLCJuYmYiOjE3MTIzNzE2OTQsImV4cCI6MTcxMjM3NTI5NCwiaXNzIjoiaHR0cHM6Ly9sb2NhbGhvc3Q6NzA4MCIsImF1ZCI6IlNha2VueS5hcGkifQ.c_hc71RbVHrrY_7qRekRiu9j0T2NEPt8mKa4wnL4eHw",
+											"type": "string"
+										}
+									]
+								},
 								"method": "PATCH",
 								"header": [],
 								"body": {
@@ -453,6 +474,16 @@
 						{
 							"name": "PATCH Post ( Update all properties except (Statues property ) in post )",
 							"request": {
+								"auth": {
+									"type": "bearer",
+									"bearer": [
+										{
+											"key": "token",
+											"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiIyIiwidXNlcl9lbWFpbCI6ImFiZGVscmFobWFubWFuc291ckBnbWFpbC5jb20iLCJuYmYiOjE3MTIzNzE2OTQsImV4cCI6MTcxMjM3NTI5NCwiaXNzIjoiaHR0cHM6Ly9sb2NhbGhvc3Q6NzA4MCIsImF1ZCI6IlNha2VueS5hcGkifQ.c_hc71RbVHrrY_7qRekRiu9j0T2NEPt8mKa4wnL4eHw",
+											"type": "string"
+										}
+									]
+								},
 								"method": "PATCH",
 								"header": [],
 								"body": {
@@ -485,10 +516,20 @@
 						{
 							"name": "DELETE Post",
 							"request": {
+								"auth": {
+									"type": "bearer",
+									"bearer": [
+										{
+											"key": "token",
+											"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiIyIiwidXNlcl9lbWFpbCI6ImFiZGVscmFobWFubWFuc291ckBnbWFpbC5jb20iLCJuYmYiOjE3MTIzNzE2OTQsImV4cCI6MTcxMjM3NTI5NCwiaXNzIjoiaHR0cHM6Ly9sb2NhbGhvc3Q6NzA4MCIsImF1ZCI6IlNha2VueS5hcGkifQ.c_hc71RbVHrrY_7qRekRiu9j0T2NEPt8mKa4wnL4eHw",
+											"type": "string"
+										}
+									]
+								},
 								"method": "DELETE",
 								"header": [],
 								"url": {
-									"raw": "https://localhost:{{portNumber}}/api/users/2/posts/2",
+									"raw": "https://localhost:{{portNumber}}/api/users/2/posts/10",
 									"protocol": "https",
 									"host": [
 										"localhost"
@@ -499,7 +540,79 @@
 										"users",
 										"2",
 										"posts",
-										"2"
+										"10"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Get All The posts in the app",
+							"request": {
+								"auth": {
+									"type": "bearer",
+									"bearer": [
+										{
+											"key": "token",
+											"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiIyIiwidXNlcl9lbWFpbCI6ImFiZGVscmFobWFubWFuc291ckBnbWFpbC5jb20iLCJuYmYiOjE3MTIzNzE2OTQsImV4cCI6MTcxMjM3NTI5NCwiaXNzIjoiaHR0cHM6Ly9sb2NhbGhvc3Q6NzA4MCIsImF1ZCI6IlNha2VueS5hcGkifQ.c_hc71RbVHrrY_7qRekRiu9j0T2NEPt8mKa4wnL4eHw",
+											"type": "string"
+										}
+									]
+								},
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "https://localhost:{{portNumber}}/api/allposts",
+									"protocol": "https",
+									"host": [
+										"localhost"
+									],
+									"port": "{{portNumber}}",
+									"path": [
+										"api",
+										"allposts"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "SerchForPost (with the information of the you want)",
+							"protocolProfileBehavior": {
+								"disableBodyPruning": true
+							},
+							"request": {
+								"auth": {
+									"type": "bearer",
+									"bearer": [
+										{
+											"key": "token",
+											"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiIyIiwidXNlcl9lbWFpbCI6ImFiZGVscmFobWFubWFuc291ckBnbWFpbC5jb20iLCJuYmYiOjE3MTI0NjMyMzgsImV4cCI6MTcxMjQ2NjgzOCwiaXNzIjoiaHR0cHM6Ly9sb2NhbGhvc3Q6NzA4MCIsImF1ZCI6IlNha2VueS5hcGkifQ.R0Zj1yT3fT7YpNSIoR9J2d-ROfpA5aj59VtSdrb2qsQ",
+											"type": "string"
+										}
+									]
+								},
+								"method": "GET",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\r\n    \"minPrice\": 1000,\r\n    \"maxPrice\": 5000,\r\n    \"minArea\": 50,\r\n    \"maxArea\": 100,\r\n    \"minRooms\": 2,\r\n    \"maxRooms\": 4,\r\n    \"minBathrooms\": 1,\r\n    \"maxBathrooms\": 2,\r\n    \"minFloors\": 1,\r\n    \"maxFloors\": 3,\r\n    \"postLookSea\": true,\r\n    \"postPetsAllow\": false\r\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "https://localhost:{{portNumber}}/api/SearchForpost",
+									"protocol": "https",
+									"host": [
+										"localhost"
+									],
+									"port": "{{portNumber}}",
+									"path": [
+										"api",
+										"SearchForpost"
 									]
 								}
 							},
@@ -513,10 +626,20 @@
 						{
 							"name": "GET PostFeedbacks",
 							"request": {
+								"auth": {
+									"type": "bearer",
+									"bearer": [
+										{
+											"key": "token",
+											"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiIyIiwidXNlcl9uYW1lIjoiYWJkZWxyYWhtYW5fbWFuc291ciIsInVzZXJfZW1haWwiOiJhYmRlbHJhaG1hbm1hbnNvdXJAZ21haWwuY29tIiwibmJmIjoxNzEwMzU3NjI2LCJleHAiOjE3MTAzNjEyMjYsImlzcyI6Imh0dHBzOi8vbG9jYWxob3N0OjcwODAiLCJhdWQiOiJTYWtlbnkuYXBpIn0.EhpT6Acy4mt9oBZES8PJ9CBwL1f5y1pW6Kt5wWaL1mk",
+											"type": "string"
+										}
+									]
+								},
 								"method": "GET",
 								"header": [],
 								"url": {
-									"raw": "https://localhost:{{portNumber}}/api/users/2/posts/2/postfeedbacks",
+									"raw": "https://localhost:{{portNumber}}/api/users/2/posts/9/postfeedbacks",
 									"protocol": "https",
 									"host": [
 										"localhost"
@@ -527,33 +650,8 @@
 										"users",
 										"2",
 										"posts",
-										"2",
+										"9",
 										"postfeedbacks"
-									]
-								}
-							},
-							"response": []
-						},
-						{
-							"name": "GET PostFeedback",
-							"request": {
-								"method": "GET",
-								"header": [],
-								"url": {
-									"raw": "https://localhost:7080/api/users/2/posts/1/postfeedbacks/1",
-									"protocol": "https",
-									"host": [
-										"localhost"
-									],
-									"port": "7080",
-									"path": [
-										"api",
-										"users",
-										"2",
-										"posts",
-										"1",
-										"postfeedbacks",
-										"1"
 									]
 								}
 							},
@@ -562,11 +660,21 @@
 						{
 							"name": "POST Postfeedback ",
 							"request": {
+								"auth": {
+									"type": "bearer",
+									"bearer": [
+										{
+											"key": "token",
+											"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiIyIiwidXNlcl9uYW1lIjoiYWJkZWxyYWhtYW5fbWFuc291ciIsInVzZXJfZW1haWwiOiJhYmRlbHJhaG1hbm1hbnNvdXJAZ21haWwuY29tIiwibmJmIjoxNzEwMzU3NjI2LCJleHAiOjE3MTAzNjEyMjYsImlzcyI6Imh0dHBzOi8vbG9jYWxob3N0OjcwODAiLCJhdWQiOiJTYWtlbnkuYXBpIn0.EhpT6Acy4mt9oBZES8PJ9CBwL1f5y1pW6Kt5wWaL1mk",
+											"type": "string"
+										}
+									]
+								},
 								"method": "POST",
 								"header": [],
 								"body": {
 									"mode": "raw",
-									"raw": "{\r\n  \"PostFeedDate\": \"2024-01-24T12:34:56.789Z\",\r\n  \"PostFeedTime\": \"02:30:00\",\r\n  \"PostFeedText\": \"up\"\r\n  \r\n}\r\n",
+									"raw": "{\r\n  \r\n  \"PostFeedText\": \"wonderfull\"\r\n  \r\n}\r\n",
 									"options": {
 										"raw": {
 											"language": "json"
@@ -574,7 +682,7 @@
 									}
 								},
 								"url": {
-									"raw": "https://localhost:{{portNumber}}/api/users/2/posts/1/postfeedbacks",
+									"raw": "https://localhost:{{portNumber}}/api/users/2/posts/9/postfeedbacks",
 									"protocol": "https",
 									"host": [
 										"localhost"
@@ -585,7 +693,7 @@
 										"users",
 										"2",
 										"posts",
-										"1",
+										"9",
 										"postfeedbacks"
 									]
 								}
@@ -595,11 +703,21 @@
 						{
 							"name": "PATCH PostFeedback",
 							"request": {
+								"auth": {
+									"type": "bearer",
+									"bearer": [
+										{
+											"key": "token",
+											"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiIyIiwidXNlcl9uYW1lIjoiYWJkZWxyYWhtYW5fbWFuc291ciIsInVzZXJfZW1haWwiOiJhYmRlbHJhaG1hbm1hbnNvdXJAZ21haWwuY29tIiwibmJmIjoxNzEwMzU3NjI2LCJleHAiOjE3MTAzNjEyMjYsImlzcyI6Imh0dHBzOi8vbG9jYWxob3N0OjcwODAiLCJhdWQiOiJTYWtlbnkuYXBpIn0.EhpT6Acy4mt9oBZES8PJ9CBwL1f5y1pW6Kt5wWaL1mk",
+											"type": "string"
+										}
+									]
+								},
 								"method": "PATCH",
 								"header": [],
 								"body": {
 									"mode": "raw",
-									"raw": "[\r\n    {\r\n        \"op\":\"replace\",\r\n        \"path\":\"/postFeedText\",\r\n        \"value\":\"thank you\"\r\n    }\r\n\r\n]",
+									"raw": "[\r\n    {\r\n        \"op\":\"replace\",\r\n        \"path\":\"/postFeedText\",\r\n        \"value\":\"super\"\r\n    }\r\n\r\n]",
 									"options": {
 										"raw": {
 											"language": "json"
@@ -607,7 +725,7 @@
 									}
 								},
 								"url": {
-									"raw": "https://localhost:7080/api/users/2/posts/2/postfeedbacks/30",
+									"raw": "https://localhost:7080/api/users/2/posts/5/postfeedbacks/39",
 									"protocol": "https",
 									"host": [
 										"localhost"
@@ -618,9 +736,9 @@
 										"users",
 										"2",
 										"posts",
-										"2",
+										"5",
 										"postfeedbacks",
-										"30"
+										"39"
 									]
 								}
 							},
@@ -634,10 +752,20 @@
 						{
 							"name": "GET Features ( For each post )",
 							"request": {
+								"auth": {
+									"type": "bearer",
+									"bearer": [
+										{
+											"key": "token",
+											"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiIyIiwidXNlcl9uYW1lIjoiYWJkZWxyYWhtYW5fbWFuc291ciIsInVzZXJfZW1haWwiOiJhYmRlbHJhaG1hbm1hbnNvdXJAZ21haWwuY29tIiwibmJmIjoxNzEwMzU3NjI2LCJleHAiOjE3MTAzNjEyMjYsImlzcyI6Imh0dHBzOi8vbG9jYWxob3N0OjcwODAiLCJhdWQiOiJTYWtlbnkuYXBpIn0.EhpT6Acy4mt9oBZES8PJ9CBwL1f5y1pW6Kt5wWaL1mk",
+											"type": "string"
+										}
+									]
+								},
 								"method": "GET",
 								"header": [],
 								"url": {
-									"raw": "https://localhost:{{portNumber}}/api/users/2/posts/2/features",
+									"raw": "https://localhost:{{portNumber}}/api/users/2/posts/3/features",
 									"protocol": "https",
 									"host": [
 										"localhost"
@@ -648,7 +776,7 @@
 										"users",
 										"2",
 										"posts",
-										"2",
+										"3",
 										"features"
 									]
 								}
@@ -658,10 +786,20 @@
 						{
 							"name": "GET Feature ( For specific post )",
 							"request": {
+								"auth": {
+									"type": "bearer",
+									"bearer": [
+										{
+											"key": "token",
+											"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiIyIiwidXNlcl9uYW1lIjoiYWJkZWxyYWhtYW5fbWFuc291ciIsInVzZXJfZW1haWwiOiJhYmRlbHJhaG1hbm1hbnNvdXJAZ21haWwuY29tIiwibmJmIjoxNzEwMzU3NjI2LCJleHAiOjE3MTAzNjEyMjYsImlzcyI6Imh0dHBzOi8vbG9jYWxob3N0OjcwODAiLCJhdWQiOiJTYWtlbnkuYXBpIn0.EhpT6Acy4mt9oBZES8PJ9CBwL1f5y1pW6Kt5wWaL1mk",
+											"type": "string"
+										}
+									]
+								},
 								"method": "GET",
 								"header": [],
 								"url": {
-									"raw": "https://localhost:{{portNumber}}/api/users/2/posts/1/features/1",
+									"raw": "https://localhost:{{portNumber}}/api/users/2/posts/2/features/1",
 									"protocol": "https",
 									"host": [
 										"localhost"
@@ -672,7 +810,7 @@
 										"users",
 										"2",
 										"posts",
-										"1",
+										"2",
 										"features",
 										"1"
 									]
@@ -683,11 +821,21 @@
 						{
 							"name": "POST Feature ( For specific post )",
 							"request": {
+								"auth": {
+									"type": "bearer",
+									"bearer": [
+										{
+											"key": "token",
+											"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiIyIiwidXNlcl9uYW1lIjoiYWJkZWxyYWhtYW5fbWFuc291ciIsInVzZXJfZW1haWwiOiJhYmRlbHJhaG1hbm1hbnNvdXJAZ21haWwuY29tIiwibmJmIjoxNzExNTcwMjQ4LCJleHAiOjE3MTE1NzM4NDgsImlzcyI6Imh0dHBzOi8vbG9jYWxob3N0OjcwODAiLCJhdWQiOiJTYWtlbnkuYXBpIn0.yAit21HYNLY8_U5iLYOXdUBXwVkdf9i2W0oLUj38TR4",
+											"type": "string"
+										}
+									]
+								},
 								"method": "POST",
 								"header": [],
 								"body": {
 									"mode": "raw",
-									"raw": "{\r\n    \"FeaturesName\" : \"nice place\"\r\n}",
+									"raw": "{\r\n    \"FeaturesName\" : \"3\"\r\n}",
 									"options": {
 										"raw": {
 											"language": "json"
@@ -695,7 +843,7 @@
 									}
 								},
 								"url": {
-									"raw": "https://localhost:{{portNumber}}/api/users/2/posts/1/features",
+									"raw": "https://localhost:{{portNumber}}/api/users/2/posts/3/features",
 									"protocol": "https",
 									"host": [
 										"localhost"
@@ -706,7 +854,7 @@
 										"users",
 										"2",
 										"posts",
-										"1",
+										"3",
 										"features"
 									]
 								}
@@ -719,7 +867,7 @@
 								"method": "DELETE",
 								"header": [],
 								"url": {
-									"raw": "https://localhost:{{portNumber}}/api/users/2/posts/2/features/11",
+									"raw": "https://localhost:{{portNumber}}/api/users/2/posts/3/features/20",
 									"protocol": "https",
 									"host": [
 										"localhost"
@@ -730,9 +878,9 @@
 										"users",
 										"2",
 										"posts",
-										"2",
+										"3",
 										"features",
-										"11"
+										"20"
 									]
 								}
 							},
@@ -753,7 +901,7 @@
 									}
 								},
 								"url": {
-									"raw": "https://localhost:{{portNumber}}/api/users/2/posts/2/features/12",
+									"raw": "https://localhost:{{portNumber}}/api/users/2/posts/3/features/21",
 									"protocol": "https",
 									"host": [
 										"localhost"
@@ -764,9 +912,9 @@
 										"users",
 										"2",
 										"posts",
-										"2",
+										"3",
 										"features",
-										"12"
+										"21"
 									]
 								}
 							},
@@ -817,6 +965,16 @@
 								"disableBodyPruning": true
 							},
 							"request": {
+								"auth": {
+									"type": "bearer",
+									"bearer": [
+										{
+											"key": "token",
+											"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiIyIiwidXNlcl9uYW1lIjoiYWJkZWxyYWhtYW5fbWFuc291ciIsInVzZXJfZW1haWwiOiJhYmRlbHJhaG1hbm1hbnNvdXJAZ21haWwuY29tIiwibmJmIjoxNzEwMzU3NjI2LCJleHAiOjE3MTAzNjEyMjYsImlzcyI6Imh0dHBzOi8vbG9jYWxob3N0OjcwODAiLCJhdWQiOiJTYWtlbnkuYXBpIn0.EhpT6Acy4mt9oBZES8PJ9CBwL1f5y1pW6Kt5wWaL1mk",
+											"type": "string"
+										}
+									]
+								},
 								"method": "GET",
 								"header": [],
 								"body": {
@@ -824,7 +982,7 @@
 									"formdata": []
 								},
 								"url": {
-									"raw": "https://localhost:{{portNumber}}/api/posts/2/pictures/1",
+									"raw": "https://localhost:{{portNumber}}/api/posts/2/pictures/10021",
 									"protocol": "https",
 									"host": [
 										"localhost"
@@ -835,7 +993,7 @@
 										"posts",
 										"2",
 										"pictures",
-										"1"
+										"10021"
 									]
 								}
 							},
@@ -844,6 +1002,16 @@
 						{
 							"name": "GET Pictures ( for a post : doesn't work right now)",
 							"request": {
+								"auth": {
+									"type": "bearer",
+									"bearer": [
+										{
+											"key": "token",
+											"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiIyIiwidXNlcl9uYW1lIjoiYWJkZWxyYWhtYW5fbWFuc291ciIsInVzZXJfZW1haWwiOiJhYmRlbHJhaG1hbm1hbnNvdXJAZ21haWwuY29tIiwibmJmIjoxNzExNTcxODczLCJleHAiOjE3MTE1NzU0NzMsImlzcyI6Imh0dHBzOi8vbG9jYWxob3N0OjcwODAiLCJhdWQiOiJTYWtlbnkuYXBpIn0.6fKRVMZlEqxMWDNfEKdjbPSCxTDX8WUz4j-DYWYq_t0",
+											"type": "string"
+										}
+									]
+								},
 								"method": "GET",
 								"header": [],
 								"url": {
@@ -866,15 +1034,30 @@
 						{
 							"name": "POST Picture (For specific post)",
 							"request": {
+								"auth": {
+									"type": "bearer",
+									"bearer": [
+										{
+											"key": "token",
+											"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiIyIiwidXNlcl9uYW1lIjoiYWJkZWxyYWhtYW5fbWFuc291ciIsInVzZXJfZW1haWwiOiJhYmRlbHJhaG1hbm1hbnNvdXJAZ21haWwuY29tIiwibmJmIjoxNzEwMzU3NjI2LCJleHAiOjE3MTAzNjEyMjYsImlzcyI6Imh0dHBzOi8vbG9jYWxob3N0OjcwODAiLCJhdWQiOiJTYWtlbnkuYXBpIn0.EhpT6Acy4mt9oBZES8PJ9CBwL1f5y1pW6Kt5wWaL1mk",
+											"type": "string"
+										}
+									]
+								},
 								"method": "POST",
 								"header": [],
 								"body": {
 									"mode": "formdata",
 									"formdata": [
 										{
-											"key": "Data.Images",
+											"key": "Images",
 											"type": "file",
-											"src": "/C:/Users/Mostafa Elsayad/Pictures/pictures/firewatch-deer-at-purple-mountains-zaan9skdp07kbdwr (1).jpg"
+											"src": [
+												"/C:/Users/Mostafa Elsayad/Pictures/p1.png",
+												"/C:/Users/Mostafa Elsayad/Pictures/Untitled.png",
+												"/C:/Users/Mostafa Elsayad/Pictures/Untitled1.png",
+												"/C:/Users/Mostafa Elsayad/Pictures/WhatsApp Image 2023-07-22 at 21.16.09.jpg"
+											]
 										}
 									]
 								},
@@ -894,6 +1077,51 @@
 								}
 							},
 							"response": []
+						},
+						{
+							"name": "DELETE All pictures",
+							"request": {
+								"method": "DELETE",
+								"header": [],
+								"url": {
+									"raw": "https://localhost:{{portNumber}}/api/posts/2/pictures",
+									"protocol": "https",
+									"host": [
+										"localhost"
+									],
+									"port": "{{portNumber}}",
+									"path": [
+										"api",
+										"posts",
+										"2",
+										"pictures"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Delete one picture with its id",
+							"request": {
+								"method": "DELETE",
+								"header": [],
+								"url": {
+									"raw": "https://localhost:{{portNumber}}/api/posts/2/pictures/10020",
+									"protocol": "https",
+									"host": [
+										"localhost"
+									],
+									"port": "{{portNumber}}",
+									"path": [
+										"api",
+										"posts",
+										"2",
+										"pictures",
+										"10020"
+									]
+								}
+							},
+							"response": []
 						}
 					]
 				},
@@ -903,6 +1131,16 @@
 						{
 							"name": "GET Notifications (For Specific User)",
 							"request": {
+								"auth": {
+									"type": "bearer",
+									"bearer": [
+										{
+											"key": "token",
+											"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiIyIiwidXNlcl9uYW1lIjoiYWJkZWxyYWhtYW5fbWFuc291ciIsInVzZXJfZW1haWwiOiJhYmRlbHJhaG1hbm1hbnNvdXJAZ21haWwuY29tIiwibmJmIjoxNzEyMjUyMTE2LCJleHAiOjE3MTIyNTU3MTYsImlzcyI6Imh0dHBzOi8vbG9jYWxob3N0OjcwODAiLCJhdWQiOiJTYWtlbnkuYXBpIn0.e5wQIruom8f4JOJ5hogHK3i2zFoR4bGEVUNI_xQCVwg",
+											"type": "string"
+										}
+									]
+								},
 								"method": "GET",
 								"header": [],
 								"url": {
@@ -1178,10 +1416,20 @@
 						{
 							"name": "POST favorite ( Add post to favorites)",
 							"request": {
+								"auth": {
+									"type": "bearer",
+									"bearer": [
+										{
+											"key": "token",
+											"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiIyIiwidXNlcl9uYW1lIjoiYWJkZWxyYWhtYW5fbWFuc291ciIsInVzZXJfZW1haWwiOiJhYmRlbHJhaG1hbm1hbnNvdXJAZ21haWwuY29tIiwibmJmIjoxNzEwNTIyMTMxLCJleHAiOjE3MTA1MjU3MzEsImlzcyI6Imh0dHBzOi8vbG9jYWxob3N0OjcwODAiLCJhdWQiOiJTYWtlbnkuYXBpIn0.D-xIbTtGUt2l19chS0D9C7SDW192DW7nNh3BUDYHhb8",
+											"type": "string"
+										}
+									]
+								},
 								"method": "POST",
 								"header": [],
 								"url": {
-									"raw": "https://localhost:{{portNumber}}/api/users/2/posts/2/postfavouriate",
+									"raw": "https://localhost:{{portNumber}}/api/users/2/posts/4/postfavouriate",
 									"protocol": "https",
 									"host": [
 										"localhost"
@@ -1192,7 +1440,7 @@
 										"users",
 										"2",
 										"posts",
-										"2",
+										"4",
 										"postfavouriate"
 									]
 								}
@@ -1202,6 +1450,16 @@
 						{
 							"name": "GET Favorited Posts ( of user )",
 							"request": {
+								"auth": {
+									"type": "bearer",
+									"bearer": [
+										{
+											"key": "token",
+											"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiIyIiwidXNlcl9uYW1lIjoiYWJkZWxyYWhtYW5fbWFuc291ciIsInVzZXJfZW1haWwiOiJhYmRlbHJhaG1hbm1hbnNvdXJAZ21haWwuY29tIiwibmJmIjoxNzExNTU1NTA4LCJleHAiOjE3MTE1NTkxMDgsImlzcyI6Imh0dHBzOi8vbG9jYWxob3N0OjcwODAiLCJhdWQiOiJTYWtlbnkuYXBpIn0.wBJZfL9giaaTQXh-r2Yw8uNiL6o76LC7dehwfq-LMcM",
+											"type": "string"
+										}
+									]
+								},
 								"method": "GET",
 								"header": [],
 								"url": {
@@ -1222,32 +1480,18 @@
 							"response": []
 						},
 						{
-							"name": "GET Favorited Post ( of user )",
-							"request": {
-								"method": "GET",
-								"header": [],
-								"url": {
-									"raw": "https://localhost:{{portNumber}}/api/users/2/posts/2/postfavouriate",
-									"protocol": "https",
-									"host": [
-										"localhost"
-									],
-									"port": "{{portNumber}}",
-									"path": [
-										"api",
-										"users",
-										"2",
-										"posts",
-										"2",
-										"postfavouriate"
-									]
-								}
-							},
-							"response": []
-						},
-						{
 							"name": "DELETE Post From favorites",
 							"request": {
+								"auth": {
+									"type": "bearer",
+									"bearer": [
+										{
+											"key": "token",
+											"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiIyIiwidXNlcl9uYW1lIjoiYWJkZWxyYWhtYW5fbWFuc291ciIsInVzZXJfZW1haWwiOiJhYmRlbHJhaG1hbm1hbnNvdXJAZ21haWwuY29tIiwibmJmIjoxNzEwMzU3NjI2LCJleHAiOjE3MTAzNjEyMjYsImlzcyI6Imh0dHBzOi8vbG9jYWxob3N0OjcwODAiLCJhdWQiOiJTYWtlbnkuYXBpIn0.EhpT6Acy4mt9oBZES8PJ9CBwL1f5y1pW6Kt5wWaL1mk",
+											"type": "string"
+										}
+									]
+								},
 								"method": "DELETE",
 								"header": [],
 								"url": {
@@ -1272,38 +1516,6 @@
 					]
 				},
 				{
-					"name": "User Ban",
-					"item": [
-						{
-							"name": "POST ( ban user )",
-							"request": {
-								"method": "POST",
-								"header": [],
-								"url": {
-									"raw": "https://localhost:{{portNumber}}/api/userBan/ban?SearchQuery=98765432109877",
-									"protocol": "https",
-									"host": [
-										"localhost"
-									],
-									"port": "{{portNumber}}",
-									"path": [
-										"api",
-										"userBan",
-										"ban"
-									],
-									"query": [
-										{
-											"key": "SearchQuery",
-											"value": "98765432109877"
-										}
-									]
-								}
-							},
-							"response": []
-						}
-					]
-				},
-				{
 					"name": "Authentication",
 					"item": [
 						{
@@ -1313,7 +1525,7 @@
 								"header": [],
 								"body": {
 									"mode": "raw",
-									"raw": "{\r\n  \"userName\": \"abdelrahman_mansour\",\r\n  \"userMail\": \"abdelrahmanmansour@gmail.com\",\r\n  \"password\": \"123456789\"\r\n}",
+									"raw": "{\r\n  \"userMail\": \"abdelrahmanmansour@gmail.com\",\r\n  \"password\": \"123456789\"\r\n}",
 									"options": {
 										"raw": {
 											"language": "json"
@@ -1321,7 +1533,7 @@
 									}
 								},
 								"url": {
-									"raw": "https://localhost:{{portNumber}}/api/authentication/authenticate",
+									"raw": "https://localhost:{{portNumber}}/api/authentication/login",
 									"protocol": "https",
 									"host": [
 										"localhost"
@@ -1330,7 +1542,7 @@
 									"path": [
 										"api",
 										"authentication",
-										"authenticate"
+										"login"
 									]
 								}
 							},
