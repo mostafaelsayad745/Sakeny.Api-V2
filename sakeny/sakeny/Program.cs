@@ -1,7 +1,9 @@
+using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.SignalR;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.IdentityModel.Tokens;
+using Microsoft.OpenApi.Models;
 using sakeny.DbContexts;
 using sakeny.Entities;
 using sakeny.Hubs;
@@ -34,7 +36,8 @@ namespace sakeny
 
 
             builder.Services.AddEndpointsApiExplorer();
-            builder.Services.AddSwaggerGen();
+
+            builder.Services.AddSwaggerGen( );
 
             //builder.Services.AddSwaggerGen(c =>
             //{
@@ -48,13 +51,13 @@ namespace sakeny
             });
 
             builder.Services.AddAuthentication("Bearer")
-                 .AddJwtBearer(options =>
+                 .AddJwtBearer(JwtBearerDefaults.AuthenticationScheme ,options =>
                    {
                        options.TokenValidationParameters = new()
                        {
-                           ValidateIssuer = false,
-                           ValidateAudience = false,
-                           ValidateIssuerSigningKey = false,
+                           ValidateIssuer = true,
+                           ValidateAudience = true,
+                           ValidateIssuerSigningKey = true,
                            ValidIssuer = builder.Configuration["Authentication:Issuer"],
                            ValidAudience = builder.Configuration["Authentication:Audience"],
                            IssuerSigningKey = new SymmetricSecurityKey(
@@ -103,11 +106,15 @@ namespace sakeny
             var app = builder.Build();
 
             // Configure the HTTP request pipeline.
-            if (app.Environment.IsDevelopment())
+            //if (app.Environment.IsDevelopment())
+            //{
+            if (true)
             {
                 app.UseSwagger();
                 app.UseSwaggerUI();
             }
+           
+            //}
 
 
             app.UseCors("AllowAll");
