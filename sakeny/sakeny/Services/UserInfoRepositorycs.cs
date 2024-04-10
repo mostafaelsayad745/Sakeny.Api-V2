@@ -69,6 +69,12 @@ namespace sakeny.Services
         // defination for the user
 
 
+        public async Task<UsersTbl?> validateUser(string email, string password)
+        {
+            return await _context.UsersTbls.Where(u => u.UserEmail == email && u.UserPassword == password)
+                .FirstOrDefaultAsync();
+        }
+
         public async Task<bool> checkEmailNotRepated(UsersTbl user)
         {
             if (await _context.UsersTbls.AnyAsync(u => u.UserEmail == user.UserEmail))

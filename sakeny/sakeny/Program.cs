@@ -113,6 +113,8 @@ namespace sakeny
                 app.UseSwagger();
                 app.UseSwaggerUI();
             }
+
+            app.UseDeveloperExceptionPage();
            
             //}
 

@@ -1,0 +1,38 @@
+#containers
+services:
+  webapp:
+    build: .
+    container_name: sakenyapi
+    ports:
+      - "8080:80"
+    networks:
+      - net1
+    depends_on:
+      - sqlserver
+    
+    environment:
+      - ConnectionStrings:SakenyDbConnectionString=Server=sqlserver;Database=HOUSE_RENT_DB;User Id = sa;Password=@#1234@#;Trust Server Certificate=True
+      - Authentication:SecretForKey=Y6v9K8r7t6w9z$C&F)J@NcRfUjXn2r5u
+      - Authentication:Issuer=http://localhost:8080
+      - Authentication:Audience=*
+  
+  sqlserver:
+    image: mcr.microsoft.com/mssql/server:2019-latest
+    networks:
+      - net1
+    hostname: sqlserver
+    volumes:
+      - sqlserverdata:/var/opt/mssql
+    container_name: sqlserver
+    environment:
+      - ACCEPT_EULA=Y
+      - MSSQL_SA_PASSWORD=@#1234@#
+
+# Networks
+networks:
+  net1:
+
+
+# Volumes
+volumes:
+  sqlserverdata:

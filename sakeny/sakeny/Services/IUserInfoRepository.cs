@@ -25,6 +25,8 @@ namespace sakeny.Services
 
         Task<bool> checkEmailNotRepated(UsersTbl user);
 
+        Task<UsersTbl?> validateUser(string email, string password);
+
 
         // defination for the post feedbacks of the user
 
