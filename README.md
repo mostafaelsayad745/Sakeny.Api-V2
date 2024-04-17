@@ -8,3 +8,5 @@ This project is a real estate application developed using .NET Core and Entity F
 - Post Real Estate Listings
 - Provide Feedback on Listings
 - Upload Pictures of Properties
+- Real time Chat between users
+  
