@@ -104,6 +104,16 @@ namespace sakeny.Services
             return await _context.UsersTbls.Where(u => u.UserId == userId).FirstOrDefaultAsync();
         }
 
+        public async Task<string?> GetUserNameAsync(int userId)
+        {
+            var user = await _context.UsersTbls
+                                    .Where(u => u.UserId == userId)
+                                    .Select(u => u.UserFullName) // Selecting just the UserName
+                                    .FirstOrDefaultAsync();
+
+            return user;
+        }
+
         public async Task<UsersTbl?> GetUserAsync(int userId, bool includePostFeedbacks = false)
         {
             if (includePostFeedbacks)

@@ -64,18 +64,23 @@ namespace sakeny.Entities
         public bool? PostStatue { get; set; } 
 
         [InverseProperty("Post")]
-        public virtual ICollection<PostFeedbackTbl> PostFeedbackTbls { get; set; }
+        public virtual ICollection<PostFeedbackTbl>? PostFeedbackTbls { get; set; }
         [InverseProperty("Post")]
         public virtual ICollection<PostPicTbl> PostPicTbls { get; set; }
 
+        [InverseProperty("Post")]
+        public virtual ICollection<PostFeaturesTbl>? PostFeaturesTbls { get; set; }
 
+        [InverseProperty("Post")]
+        public virtual ICollection<FeaturesTbl> Features { get; set; }
+    
 
-        //new modification
-        //[Column("POST_USER_ID", TypeName = "numeric(18, 0)")]
-        public decimal PostUserId { get; set; }
+    //new modification
+    //[Column("POST_USER_ID", TypeName = "numeric(18, 0)")]
+    public decimal PostUserId { get; set; }
 
         [ForeignKey("PostUserId")]
-        public virtual UsersTbl User { get; set; }
+        public virtual UsersTbl? User { get; set; }
 
     }
 }

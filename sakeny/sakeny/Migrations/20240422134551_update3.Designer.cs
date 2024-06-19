@@ -3,6 +3,7 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using sakeny.DbContexts;
 
@@ -11,9 +12,10 @@ using sakeny.DbContexts;
 namespace sakeny.Migrations
 {
     [DbContext(typeof(HOUSE_RENT_DBContext))]
-    partial class HOUSE_RENT_DBContextModelSnapshot : ModelSnapshot
+    [Migration("20240422134551_update3")]
+    partial class update3
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder

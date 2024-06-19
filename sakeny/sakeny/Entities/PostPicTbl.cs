@@ -19,6 +19,9 @@ namespace sakeny.Entities
         [Column("PICTURE", TypeName = "image")]
         public byte[]? Picture { get; set; }
 
+        [Column("PICTURESTRING", TypeName = "nvarchar(max)")] // Change the type to nvarchar(max)
+        public string? PictureString { get; set; }
+
         [ForeignKey("PostId")]
         [InverseProperty("PostPicTbls")]
         public virtual PostsTbl? Post { get; set; }

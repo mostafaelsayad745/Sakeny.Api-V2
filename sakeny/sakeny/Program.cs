@@ -9,6 +9,11 @@ using sakeny.Entities;
 using sakeny.Hubs;
 using sakeny.Models.ChatDtos;
 using sakeny.Services;
+using sakeny.Services.FaviourateRepo;
+using sakeny.Services.NewPostRepo;
+using sakeny.Services.NotificationRepo;
+using sakeny.Services.PostFeedbackRepo;
+using sakeny.Services.PostRepo;
 using Serilog;
 using System.Text;
 
@@ -50,7 +55,7 @@ namespace sakeny
                 options.UseSqlServer(builder.Configuration["ConnectionStrings:SakenyDbConnectionString"]);
             });
 
-            builder.Services.AddAuthentication("Bearer")
+            builder.Services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
                  .AddJwtBearer(JwtBearerDefaults.AuthenticationScheme ,options =>
                    {
                        options.TokenValidationParameters = new()
@@ -97,6 +102,11 @@ namespace sakeny
 
             builder.Services.AddSingleton<sharedDb>();
             builder.Services.AddScoped<IUserInfoRepository, UserInfoRepositorycs>();
+            builder.Services.AddScoped<IPostsRepository, PostsRepository>();
+            builder.Services.AddScoped<IpostRepo, PostRepo>();
+            builder.Services.AddScoped<IFaviourateRepo, FaviourateRepo>();
+            builder.Services.AddScoped<INotificationRepo, NotificationRepo>();
+            builder.Services.AddScoped<IPostFeedbackRepo, PostFeedbackRepo>();
             builder.Services.AddAutoMapper(AppDomain.CurrentDomain.GetAssemblies());
 
             // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle

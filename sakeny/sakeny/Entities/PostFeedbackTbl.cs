@@ -15,10 +15,10 @@ namespace sakeny.Entities
         public decimal PostFeedId { get; set; }
 
         [Column("POST_FEED_DATE", TypeName = "date")]
-        public DateTime? PostFeedDate { get; set; }
+        public DateTime? PostFeedDate { get; set; } = DateTime.Now;
 
         [Column("POST_FEED_TIME")]
-        public TimeSpan? PostFeedTime { get; set; }
+        public TimeSpan? PostFeedTime { get; set; }     = DateTime.Now.TimeOfDay;
 
         [Column("POST_FEED_TEXT")]
         public string? PostFeedText { get; set; }

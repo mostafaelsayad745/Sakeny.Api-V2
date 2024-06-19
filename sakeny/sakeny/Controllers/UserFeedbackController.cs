@@ -1,10 +1,14 @@
 ﻿using AutoMapper;
+using Humanizer;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using sakeny.Entities;
+using sakeny.Models;
 using sakeny.Models.ChatDtos;
 using sakeny.Models.UserFeedbackDtos;
 using sakeny.Services;
+using System.Security.Claims;
 using System.Text.Json;
 
 namespace sakeny.Controllers
@@ -23,33 +27,65 @@ namespace sakeny.Controllers
             _mapper = mapper;
         }
 
-        [HttpGet("user/userfeedbacks")]
+        [HttpGet("userfeedbacks")]
         public async Task<IActionResult> GetFeedbacksOfUser(string? name, string? SearchQuery,
             int pageNumber = 1, int pageSize = 10)
         {
             var (receiver, pagenationMetadata) = await _userInfoRepository.GetUsersAsync(name, SearchQuery, pageNumber, pageSize);
 
-            var receiverName = receiver.Where(r => r.UserName == SearchQuery).FirstOrDefault();
+            var receiverName = receiver.Where(r => r.UserName == name).FirstOrDefault();
             Response.Headers.Add("X-Pagination",
                 JsonSerializer.Serialize(pagenationMetadata));
 
-            if (receiver == null)
+            if (receiverName == null)
             {
                 return NotFound();
             }
 
 
            var feedbacks = await _userInfoRepository.GetFeedbacksForUserAsync( receiverName.UserId);
-           return Ok(feedbacks);
+            var users = new List<UsersTbl>();
+            var feedToReturn = new List<UserFeedbacktoReturnDto>();
+            foreach (var feedback in feedbacks)
+            {
+                var user = await _userInfoRepository.GetUserAsync(feedback.FeedbackFrom);
+                var userFeedbackToReturn = new UserFeedbacktoReturnDto()
+                {
+                    UserFeedback = feedback,
+                    UserWhoMadeTheFeedback = new UserForReturnDto()
+                    {
+                        UserId = (int)user.UserId,
+                        UserName = user.UserName,
+                        UserPassword = user.UserPassword,
+                        UserFullName = user.UserFullName,
+                        UserEmail = user.UserEmail,
+                        UserNatId = user.UserNatId,
+                        UserGender = user.UserGender,
+                        UserAge = user.UserAge,
+                        UserInfo = user.UserInfo,
+                        UserAddress = user.UserAddress,
+                        UserAccountType = user.UserAccountType
+                    }
+                };
+                feedToReturn.Add(userFeedbackToReturn);
+            }
+           
+            if (feedbacks == null)
+            {
+                return NotFound("there is not feedback for this user .");
+            }
+           return Ok(feedToReturn);
         }
        
        
 
-        [HttpPost("users/{userId}/userfeedback")]
-        public async Task<IActionResult> SendFeedbackToUser(int userId, UserFeedbackDto userFeedbackDto,
+        [HttpPost("userfeedback")]
+        public async Task<IActionResult> SendFeedbackToUser( UserFeedbackDto userFeedbackDto,
             string? name, string? SearchQuery,
             int pageNumber = 1, int pageSize = 10)
         {
+            var userId = int.Parse(User.FindFirst(ClaimTypes.NameIdentifier).Value);
+
             var sender = await _userInfoRepository.GetUserAsync(userId, false);
             if (sender == null)
             {
@@ -57,11 +93,11 @@ namespace sakeny.Controllers
             }
             var (receiver, pagenationMetadata) = await _userInfoRepository.GetUsersAsync(name, SearchQuery, pageNumber, pageSize);
 
-            var receiverName = receiver.Where(r => r.UserName == SearchQuery).FirstOrDefault();
+            var receiverName = receiver.Where(r => r.UserName == name).FirstOrDefault();
             Response.Headers.Add("X-Pagination",
                 JsonSerializer.Serialize(pagenationMetadata));
 
-            if (receiver == null)
+            if (receiverName == null)
             {
                 return NotFound();
             }
@@ -69,7 +105,7 @@ namespace sakeny.Controllers
 
             await _userInfoRepository.AddFeedbackToUser(userId, receiverName.UserId, userFeedbackDto.FeedbackText);
             await _userInfoRepository.SaveChangesAsync();
-            return Ok();
+            return Ok("feedback is added successfully");
         }
 
         [HttpPut("users/{userId}/userfeedback")]

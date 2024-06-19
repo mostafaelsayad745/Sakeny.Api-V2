@@ -10,6 +10,10 @@ using sakeny.Entities;
 using sakeny.Models;
 using sakeny.Services;
 using System.Text.Json;
+using Microsoft.IdentityModel.Tokens;
+using System.IdentityModel.Tokens.Jwt;
+using System.Security.Claims;
+using System.Text;
 
 namespace sakeny.Controllers
 {
@@ -20,14 +24,16 @@ namespace sakeny.Controllers
         private readonly ILogger<UsersController> _logger;
         private readonly IUserInfoRepository _userInfoRepository;
         private readonly IMapper _mapper;
+        private readonly IConfiguration _configuration;
         const int maxPageSize = 20;
 
         public UsersController(ILogger<UsersController> logger, IUserInfoRepository userInfoRepository
-            , IMapper mapper)
+            , IMapper mapper , IConfiguration configuration)
         {
             _logger = logger ?? throw new ArgumentNullException(nameof(logger));
             _userInfoRepository = userInfoRepository ?? throw new ArgumentNullException(nameof(userInfoRepository));
             _mapper = mapper ?? throw new ArgumentNullException(nameof(mapper));
+            _configuration = configuration;
         }
 
         [HttpGet]
@@ -98,29 +104,33 @@ namespace sakeny.Controllers
 
             await _userInfoRepository.AddUserAsync(postUserEntity);
             await _userInfoRepository.SaveChangesAsync();
+            var token = GenerateTokenForUser(postUserEntity);
+
             var postUserToReturn = _mapper.Map<UserForReturnDto>(postUserEntity);
 
-            return CreatedAtRoute("GetUser", new { userId = postUserToReturn.UserId }, postUserToReturn);
+            // Return the token along with the user details
+            return CreatedAtRoute("GetUser", new { userId = postUserToReturn.UserId }, new { postUserToReturn, token });
+        
 
-            //var db = new HOUSE_RENT_DBContext();
-            //var maxUserId = db.UsersTbls.Max(u => u.UserId);
-            //var userToCreate = new UsersTbl
-            //{
-            //    UserName = userForCreationDto.UserName,
-            //    UserPassword = userForCreationDto.UserPassword,
-            //    UserFullName = userForCreationDto.UserFullName,
-            //    UserEmail = userForCreationDto.UserEmail,
-            //    UserNatId = userForCreationDto.UserNatId,
-            //    UserGender = userForCreationDto.UserGender,
-            //    UserAge = userForCreationDto.UserAge,
-            //    UserInfo = userForCreationDto.UserInfo,
-            //    UserAddress = userForCreationDto.UserAddress,
-            //    UserAccountType = userForCreationDto.UserAccountType
-            //};
-            //db.UsersTbls.Add(userToCreate);
-            //db.SaveChanges();
-            //return CreatedAtRoute("GetUser", new { id = userToCreate.UserId }, userToCreate);
-        }
+        //var db = new HOUSE_RENT_DBContext();
+        //var maxUserId = db.UsersTbls.Max(u => u.UserId);
+        //var userToCreate = new UsersTbl
+        //{
+        //    UserName = userForCreationDto.UserName,
+        //    UserPassword = userForCreationDto.UserPassword,
+        //    UserFullName = userForCreationDto.UserFullName,
+        //    UserEmail = userForCreationDto.UserEmail,
+        //    UserNatId = userForCreationDto.UserNatId,
+        //    UserGender = userForCreationDto.UserGender,
+        //    UserAge = userForCreationDto.UserAge,
+        //    UserInfo = userForCreationDto.UserInfo,
+        //    UserAddress = userForCreationDto.UserAddress,
+        //    UserAccountType = userForCreationDto.UserAccountType
+        //};
+        //db.UsersTbls.Add(userToCreate);
+        //db.SaveChanges();
+        //return CreatedAtRoute("GetUser", new { id = userToCreate.UserId }, userToCreate);
+    }
 
         [HttpPut]
        [Authorize]
@@ -261,6 +271,31 @@ namespace sakeny.Controllers
             _userInfoRepository.DeleteUserAsync(userEntity);
             await _userInfoRepository.SaveChangesAsync();
             return NoContent();
+        }
+
+        private string GenerateTokenForUser(UsersTbl user)
+        {
+            var securityKey = new SymmetricSecurityKey(Encoding.ASCII.GetBytes(_configuration["Authentication:SecretForKey"]));
+
+            var signingCredentials = new SigningCredentials(
+                securityKey, SecurityAlgorithms.HmacSha256);
+
+            var claimsForToken = new List<Claim>();
+            claimsForToken.Add(new Claim("sub", user.UserId.ToString()));
+            claimsForToken.Add(new Claim("user_email", user.UserEmail));
+
+            var jwtSecurityToken = new JwtSecurityToken(
+                _configuration["Authentication:Issuer"],
+                _configuration["Authentication:Audience"],
+                claimsForToken,
+                DateTime.UtcNow,
+                DateTime.UtcNow.AddHours(1),
+                signingCredentials);
+
+            var tokenToReturn = new JwtSecurityTokenHandler()
+               .WriteToken(jwtSecurityToken);
+
+            return tokenToReturn;
         }
     }
 }

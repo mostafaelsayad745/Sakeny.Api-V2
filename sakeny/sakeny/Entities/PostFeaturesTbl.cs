@@ -6,7 +6,7 @@ using Microsoft.EntityFrameworkCore;
 
 namespace sakeny.Entities
 {
-    [Keyless]
+    //[Keyless]
     [Table("POST_FEATURES_TBL")]
     [Index("FeaturesId", "PostId", Name = "POST_FEATURES_INDEX", IsUnique = true)]
     public partial class PostFeaturesTbl

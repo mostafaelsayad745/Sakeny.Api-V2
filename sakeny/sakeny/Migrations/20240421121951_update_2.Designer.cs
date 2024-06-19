@@ -3,6 +3,7 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using sakeny.DbContexts;
 
@@ -11,9 +12,10 @@ using sakeny.DbContexts;
 namespace sakeny.Migrations
 {
     [DbContext(typeof(HOUSE_RENT_DBContext))]
-    partial class HOUSE_RENT_DBContextModelSnapshot : ModelSnapshot
+    [Migration("20240421121951_update_2")]
+    partial class update_2
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -44,6 +46,10 @@ namespace sakeny.Migrations
                     b.HasKey("FeaturesId");
 
                     b.HasIndex("PostId");
+
+                    b.HasIndex(new[] { "FeaturesName" }, "FEATURES_INDEX")
+                        .IsUnique()
+                        .HasFilter("[FEATURES_NAME] IS NOT NULL");
 
                     b.ToTable("FEATURES_TBL");
                 });

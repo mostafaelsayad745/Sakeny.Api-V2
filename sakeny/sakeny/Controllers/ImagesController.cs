@@ -7,6 +7,7 @@ using sakeny.Services;
 using System.Linq;
 using sakeny.Models.PicturesDtos;
 using sakeny.Entities;
+using System.Text.Json;
 
 namespace sakeny.Controllers
 {
@@ -32,15 +33,15 @@ namespace sakeny.Controllers
             }
 
             var Pictures = await _userInfoRepository.GetPicturesForPostAsync(postId);
-            var imageList = new List<string>();
+            var imageList = new List<object>();
             foreach (var picture in Pictures)
             {
-                var base64Image = Convert.ToBase64String(picture.Picture);
-                imageList.Add($"data:image/jpeg;base64,{base64Image}");
+                imageList.Add(new { id = (int)picture.PostPicId, image = picture.PictureString });
             }
 
             return Ok(imageList);
         }
+
 
         [HttpGet("{picId}")]
         public async Task<IActionResult> GetImage(int postId, int picId)
@@ -55,14 +56,13 @@ namespace sakeny.Controllers
             }
 
             var picture = await _userInfoRepository.GetPictureForPostAsync(postId, picId);
-            var base64Image = Convert.ToBase64String(picture.Picture);
 
-            return Ok($"data:image/jpeg;base64,{base64Image}");
+            return Ok(new { id = (int)picture.PostPicId, image = picture.PictureString });
         }
 
         [HttpPost]
-        public async Task<IActionResult> ImageUpload(int postId,
-            [FromForm] PicturesForCreationDto picturesForCreation)
+        public async Task<IActionResult> PostPictures(int postId,
+    [FromForm] PicturesForCreationDto picturesForCreation)
         {
             if (picturesForCreation == null || picturesForCreation.Images == null || picturesForCreation.Images.Count == 0)
             {
@@ -78,28 +78,26 @@ namespace sakeny.Controllers
 
             foreach (var image in picturesForCreation.Images)
             {
-                if (image.Length > 0)
+                if (!string.IsNullOrEmpty(image))
                 {
-                    using (MemoryStream ms = new MemoryStream())
+                    PostPicTbl picture = new PostPicTbl
                     {
-                        await image.CopyToAsync(ms);
-                        PostPicTbl picture = new PostPicTbl
-                        {
-                            PostId = postId,
-                            Post = await _userInfoRepository.GetPostForUserAsync(postId),
-                            Picture = ms.ToArray()
-                        };
+                        PostId = postId,
+                        Post = await _userInfoRepository.GetPostForUserAsync(postId),
+                        PictureString = image // Assign the base64 string directly
+                    };
 
-                        await _userInfoRepository.AddPictureForPostAsync(picture);
-                        pictures.Add(picture);
-                    }
+                    await _userInfoRepository.AddPictureForPostAsync(picture);
+                    pictures.Add(picture);
                 }
             }
 
             await _userInfoRepository.SaveChangesAsync();
+            Response.Headers.Add("X-Pagination", JsonSerializer.Serialize(pictures.Select(p => p.PostPicId).ToArray()));
 
             return NoContent();
         }
+
 
 
 

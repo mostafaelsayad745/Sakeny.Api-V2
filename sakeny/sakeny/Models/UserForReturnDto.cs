@@ -4,7 +4,7 @@ namespace sakeny.Models
 {
     public class UserForReturnDto
     {
-        public decimal UserId { get; set; }
+        public int UserId { get; set; }
 
         public string UserName { get; set; } = string.Empty;
 

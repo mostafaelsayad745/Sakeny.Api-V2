@@ -182,10 +182,10 @@ namespace sakeny.Controllers
             {
                 return BadRequest(ModelState);
             }
-            if (! TryValidateModel(postToPatch))
-            {
-                return ValidationProblem(ModelState);
-            }
+            //if (! TryValidateModel(postToPatch))
+            //{
+            //    return ValidationProblem(ModelState);
+            //}
 
 
             _mapper.Map(postToPatch, postEntity);

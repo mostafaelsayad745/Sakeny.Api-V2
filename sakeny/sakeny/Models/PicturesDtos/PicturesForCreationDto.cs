@@ -2,6 +2,6 @@
 {
     public class PicturesForCreationDto
     {
-        public List<IFormFile> Images { get; set; }
+        public List<string> Images { get; set; }
     }
 }

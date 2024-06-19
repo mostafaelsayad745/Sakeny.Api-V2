@@ -11,10 +11,7 @@ namespace sakeny.Profiles
         {
             CreateMap<PostPicTbl, PicturesForReturnDto>();
             CreateMap<PostsTbl, PostForReturnDto>()
-                .ForMember(
-                    dest => dest.PostPics,
-                    opt => opt.MapFrom(src => src.PostPicTbls)
-                );
+             .ForMember(dest => dest.PostPics, opt => opt.MapFrom(src => src.PostPicTbls));
         }
     }
 }

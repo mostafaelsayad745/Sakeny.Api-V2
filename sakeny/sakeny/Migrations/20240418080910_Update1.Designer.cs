@@ -12,8 +12,8 @@ using sakeny.DbContexts;
 namespace sakeny.Migrations
 {
     [DbContext(typeof(HOUSE_RENT_DBContext))]
-    [Migration("20240329125623_Deployment")]
-    partial class Deployment
+    [Migration("20240418080910_Update1")]
+    partial class Update1
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -176,6 +176,10 @@ namespace sakeny.Migrations
                     b.Property<byte[]>("Picture")
                         .HasColumnType("image")
                         .HasColumnName("PICTURE");
+
+                    b.Property<string>("PictureString")
+                        .HasColumnType("nvarchar(max)")
+                        .HasColumnName("PICTURESTRING");
 
                     b.Property<decimal?>("PostId")
                         .HasColumnType("numeric(18,0)")

@@ -16,7 +16,7 @@ namespace sakeny.Services
 
         Task<UsersTbl?> GetUserAsync(int userId, bool includePostFeedbacks);
         Task<UsersTbl?> GetUserAsync(int userId);
-
+        Task<string?> GetUserNameAsync(int userId);
         Task AddUserAsync(UsersTbl user);
         Task UpdateUserAsync(UsersTbl user);
         void DeleteUserAsync(UsersTbl user);

@@ -88,7 +88,7 @@ namespace sakeny.Controllers
                 {
                     using (MemoryStream ms = new MemoryStream())
                     {
-                        await image.CopyToAsync(ms);
+                        //await image.CopyToAsync(ms);
                         PostPicTbl picture = new PostPicTbl
                         {
                             PostId = postId,
@@ -155,4 +155,3 @@ namespace sakeny.Controllers
         }
     }
 }
-

@@ -2,6 +2,7 @@
 using sakeny.Entities;
 using sakeny.Models.PicturesDtos;
 using sakeny.Models.PostDtos;
+using sakeny.Services.NewPostRepo;
 
 namespace sakeny.Profiles
 {
@@ -12,8 +13,8 @@ namespace sakeny.Profiles
             CreateMap<PostsTbl, PostForReturnDto>().ReverseMap();
             CreateMap<PostForUpdateDto, PostsTbl>().ReverseMap();
             CreateMap<PostForCreationDto, PostsTbl>().ReverseMap();
+            CreateMap<PostsTbl, PostDto>();
 
-           
 
 
 

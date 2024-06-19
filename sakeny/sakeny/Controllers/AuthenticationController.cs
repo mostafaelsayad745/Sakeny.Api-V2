@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Http;
+﻿
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.IdentityModel.Tokens;
 using sakeny.DbContexts;
@@ -58,9 +59,9 @@ namespace sakeny.Controllers
             var tokenToReturn = new JwtSecurityTokenHandler()
                .WriteToken(jwtSecurityToken);
 
-            Response.Headers.Add("UserId", user.Id.ToString());
+            Response.Headers.Add("userid", user.Id.ToString());
 
-            return Ok(tokenToReturn);
+            return Ok(new { tokenToReturn, user.Id , user.UserAccountType });
         }
 
         private async Task<UserInfo> validateUserCredentials(string? password, string? userMail)
@@ -74,8 +75,9 @@ namespace sakeny.Controllers
 
             var userToReturn = new UserInfo()
             {
-                Id = user.UserId,
-                UserEmail = user.UserEmail ?? string.Empty
+                Id = (int) user.UserId,
+                UserEmail = user.UserEmail ?? string.Empty,
+                UserAccountType = user.UserAccountType ?? string.Empty
             };
 
             return userToReturn;
@@ -83,8 +85,9 @@ namespace sakeny.Controllers
 
         private class UserInfo
         {
-            public decimal Id { get; set; }
+            public int Id { get; set; }
             public string UserEmail { get; set; } = string.Empty;
+            public string UserAccountType { get; set; } = string.Empty;
         }
     }
 
